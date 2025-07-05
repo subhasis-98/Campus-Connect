@@ -1,0 +1,155 @@
+/* style/style.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #00539C;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 2.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #00539C;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+form input,
+form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+}
+
+form button {
+  background-color: #00539C;
+  color: white;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background-color: #003d73;
+}
+
+#feedPosts > div {
+  margin-top: 1rem;
+  border-left: 4px solid #00539C;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+  background-color: #f0f6fc;
+}
+
+#eventList > div {
+  padding: 1rem;
+  border-left: 4px solid #FF5733;
+  background-color: #fff5f0;
+  margin-top: 1rem;
+  border-radius: 5px;
+}
+
+#notesList li {
+  margin: 0.5rem 0;
+}
+
+#notesList a {
+  color: #00539C;
+  text-decoration: none;
+}
+
+#notesList a:hover {
+  text-decoration: underline;
+}
+
+#polls button {
+  margin-right: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #00539C;
+  color: white;
+  cursor: pointer;
+}
+
+#polls button:hover {
+  background-color: #003d73;
+}
+
+footer {
+  background-color: #00539C;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  form input,
+  form textarea {
+    width: 100%;
+  }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusConnect | Polls</title>
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <header>
+    <h1>CampusConnect</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Feed</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="polls.html">Polls</a></li>
+        <li><a href="notices.html">Noticeboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="polls">
+      <h2>Campus Poll</h2>
+      <p>Will you attend the Annual Tech Fest?</p>
+      <button onclick="vote('yes')">Yes</button>
+      <button onclick="vote('no')">No</button>
+      <p id="pollResult"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 CampusConnect | Created by Subhasis Sahoo</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
