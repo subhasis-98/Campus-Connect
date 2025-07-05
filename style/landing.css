@@ -181,6 +181,7 @@ nav {
   padding: 40px 20px 20px;
   text-align: center;
   font-size: 0.95rem;
+  margin-top: 40px;
 }
 
 .footer-content h2 {
@@ -233,7 +234,35 @@ nav {
   }
 
   .feature-card {
+  }
+
+  .testimonial {
+    /* background-color: #74c0fc; */
+    padding: 40px 0;
+    margin-bottom: 40px;
+  }
+  .features-section {
+    width: 90vw;
+    height: 90vh;
+    margin: 40px auto auto auto;
+    /* background-color: #c131cf; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 24px;
+  }
+
+  .feature-card {
+    /* background-color: blue; */
     padding: 20px;
     width: 160px;
+    height: 170px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.05)
+    );
+    border-radius: 10px;
   }
 }
