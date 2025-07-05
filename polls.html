@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CampusConnect | Polls</title>
   <link rel="stylesheet" href="style/style.css" />
 </head>
+
 <body>
   <header>
     <h1>CampusConnect</h1>
@@ -22,12 +24,21 @@
 
   <main>
     <section id="polls">
-      <h2>Campus Poll</h2>
-      <p>Will you attend the Annual Tech Fest?</p>
-      <button onclick="vote('yes')">Yes</button>
-      <button onclick="vote('no')">No</button>
-      <p id="pollResult"></p>
+      <h2>Create a Poll</h2>
+      <form id="pollForm">
+        <input type="text" id="creatorName" placeholder="Your Name" required />
+        
+        <label for="creatorDp" class="custom-file-label">Upload your DP</label>
+        <input type="file" id="creatorDp" accept="image/*" required hidden />
+        <span id="fileName">No file selected</span>
+
+        <input type="text" id="pollQuestion" placeholder="Enter Poll Question" required />
+        <button type="submit">Add Poll</button>
+      </form>
+
+      <div id="pollList"></div>
     </section>
+
   </main>
 
   <footer>
@@ -36,4 +47,5 @@
 
   <script src="js/main.js"></script>
 </body>
+
 </html>
