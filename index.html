@@ -7,6 +7,9 @@
     <title>CampusConnect</title>
     <link rel="stylesheet" href="style/landing.css">
     <link rel="shortcut icon" href="src/Testimonials.png" type="image/x-icon">
+    <!-- Add this in your <head> if using Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 
 </head>
 
@@ -24,7 +27,7 @@
     <section class="hero">
         <!-- Landing Intro -->
         <div class="hero-intro">
-            <h1 class="landing-title">🎓 Welcome to <span>CampusConnect</span></h1>
+            <h1 class="landing-title">🎓 Welcome to <span class="typewriter">CampusConnect</span></h1>
             <p class="landing-subtitle">
                 Your all-in-one campus companion. Share posts, join clubs, explore internships, and buy/sell essentials
                 —
@@ -34,9 +37,15 @@
         </div>
 
     </section>
-    <hr>
+    <!-- <hr> -->
     <!-- Features Overview -->
-    <section class="testimonial">
+    <!-- <section class="testimonial">
+        <div class="features-div">
+            <h2 class="features-title">📌 Core Features </h2>
+            <p class="features-subtitle">
+                &nbsp; &nbsp; Everything you need to connect, collaborate, and thrive in your campus community.
+            </p>
+        </div>
         <div class="features-section">
             <div class="feature-card">
                 <h3>📰 Campus Wall</h3>
@@ -67,8 +76,93 @@
                 <p>Ask questions, tag topics & upvote useful student answers.</p>
             </div>
         </div>
+    </section> -->
+
+    <section class="features-grid">
+        <h2>🎯 Core Features</h2>
+        <p class="features-subtext">All-in-one platform for your campus needs.</p>
+    
+        <div class="grid-container">
+            <div class="grid-item">📝 Campus Wall</div>
+            <div class="grid-item">📅 Events</div>
+            <div class="grid-item">📚 Notes Share</div>
+            <div class="grid-item">🗳️ Polls</div>
+            <div class="grid-item">🔔 Noticeboard</div>
+            <div class="grid-item">🧾 Profile View</div>
+            <div class="grid-item">👥 Student Clubs</div>
+            <div class="grid-item">💬 CollegeQ (Q&A)</div>
+            <div class="grid-item">🛍️ Marketplace</div>
+            <div class="grid-item">🔍 Lost & Found</div>
+        </div>
     </section>
-    <hr>
+
+    
+
+    <!-- <hr> -->
+    <section class="testimonial-section">
+        <h2 class="testimonial-title">💬 What Students Say</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-slide active">
+                <p>"CampusConnect made it super easy to share notes and updates with my classmates."</p>
+                <h4>– Ananya, 3rd Year CSE</h4>
+            </div>
+            <div class="testimonial-slide">
+                <p>"The Events and RSVP features helped our club manage participants smoothly!"</p>
+                <h4>– Rahul, ECE Club Lead</h4>
+            </div>
+            <div class="testimonial-slide">
+                <p>"Love the simple UI. Shared my first PDF notes within seconds."</p>
+                <h4>– Priya, BCA Student</h4>
+            </div>
+        </div>
+    
+        <div class="testimonial-nav">
+            <span class="dot active" onclick="showSlide(0)"></span>
+            <span class="dot" onclick="showSlide(1)"></span>
+            <span class="dot" onclick="showSlide(2)"></span>
+        </div>
+    </section>
+      
+    <section class="stats-section" id="stats">
+        <h2 class="stats-title">📊 CampusConnect in Numbers</h2>
+        <p class="stats-subtitle">Trusted and loved by hundreds of students, clubs, and communities.</p>
+    
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-icon">👥</div>
+                <h3><span class="count" data-target="1200">0</span>+</h3>
+                <p>Active Students</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">📚</div>
+                <h3><span class="count" data-target="800">0</span>+</h3>
+                <p>Notes Shared</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">🎯</div>
+                <h3><span class="count" data-target="150">0</span>+</h3>
+                <p>Events Hosted</p>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">💬</div>
+                <h3><span class="count" data-target="300">0</span>+</h3>
+                <p>Questions Answered</p>
+            </div>
+        </div>
+    </section>
+      
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div>📝 Create Account</div>
+            <div>🚀 Explore Modules</div>
+            <div>🤝 Connect & Share</div>
+        </div>
+    </section>
+
+    
+
     <footer class="footer">
         <div class="footer-content">
             <h2>CampusConnect</h2>
@@ -94,6 +188,8 @@
         </div>
     </footer>
 
+    <button id="backToTop" title="Back to Top">↑</button>
+    <script src="js/landing.js"></script>
 
 </body>
 
