@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <section id="marketplace">
+        <h2>Campus Marketplace</h2>
+        <form id="itemForm">
+            <input type="text" id="itemName" placeholder="Item Name" required />
+            <input type="text" id="itemPrice" placeholder="Price (₹)" required />
+            <input type="text" id="contactInfo" placeholder="Contact Info (Phone/Email)" required />
+            <input type="file" id="itemImage" accept="image/*" required />
+            <button type="submit">Post Item</button>
+        </form>
+    
+        <div id="itemList"></div>
+    </section>
+    <script src="js/main.js"></script>
+</body>
+</html>

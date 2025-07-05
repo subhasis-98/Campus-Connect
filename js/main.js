@@ -145,3 +145,102 @@ fileInput.addEventListener("change", function () {
   fileNameDisplay.textContent =
     fileInput.files.length > 0 ? fileInput.files[0].name : "No file selected";
 });
+
+// ===== Club Section with Image Upload =====
+let clubs = JSON.parse(localStorage.getItem("clubs")) || [];
+
+function renderClubs() {
+  const clubList = document.getElementById("clubList");
+  if (!clubList) return;
+  clubList.innerHTML = "";
+
+  clubs.forEach((club) => {
+    const div = document.createElement("div");
+    div.classList.add("club-card");
+    div.innerHTML = `
+      <img src="${club.logo}" alt="${club.name} Logo" />
+      <h4>${club.name}</h4>
+      <p>${club.desc}</p>
+    `;
+    clubList.appendChild(div);
+  });
+}
+
+const clubForm = document.getElementById("clubForm");
+if (clubForm) {
+  clubForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("clubName").value.trim();
+    const desc = document.getElementById("clubDesc").value.trim();
+    const logoInput = document.getElementById("clubLogo");
+    const file = logoInput.files[0];
+
+    if (!name || !desc || !file || !file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const logo = e.target.result;
+
+      const newClub = { name, desc, logo };
+      clubs.push(newClub);
+      localStorage.setItem("clubs", JSON.stringify(clubs));
+      clubForm.reset();
+      renderClubs();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  renderClubs();
+}
+
+
+// ===== Marketplace Section with Image Upload =====
+let items = JSON.parse(localStorage.getItem("marketplaceItems")) || [];
+
+function renderItems() {
+  const itemList = document.getElementById("itemList");
+  if (!itemList) return;
+  itemList.innerHTML = "";
+
+  items.forEach((item) => {
+    const div = document.createElement("div");
+    div.classList.add("item-card");
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" />
+      <h4>${item.name}</h4>
+      <p><strong>Price:</strong> ₹${item.price}</p>
+      <p><strong>Contact:</strong> ${item.contact}</p>
+    `;
+    itemList.appendChild(div);
+  });
+}
+
+const itemForm = document.getElementById("itemForm");
+if (itemForm) {
+  itemForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("itemName").value.trim();
+    const price = document.getElementById("itemPrice").value.trim();
+    const contact = document.getElementById("contactInfo").value.trim();
+    const imageInput = document.getElementById("itemImage");
+    const file = imageInput.files[0];
+
+    if (!name || !price || !contact || !file || !file.type.startsWith("image/")) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const image = e.target.result;
+
+      const newItem = { name, price, contact, image };
+      items.push(newItem);
+      localStorage.setItem("marketplaceItems", JSON.stringify(items));
+      itemForm.reset();
+      renderItems();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  renderItems();
+}

@@ -2,45 +2,98 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CampusConnect | Home</title>
-    <link rel="stylesheet" href="style/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/landing.css">
+
 </head>
 
 <body>
     <header>
-        <h1>CampusConnect</h1>
         <nav>
-            <ul>
-                <li><a href="index.html">Feed</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="notes.html">Notes</a></li>
-                <li><a href="polls.html">Polls</a></li>
-                <li><a href="notices.html">Noticeboard</a></li>
-            </ul>
+            <div class="nav-div">
+                <img class="app-logo" height="40px" width="40px" src="src/Testimonials.png" alt="" srcset="">
+                <h3 class="name-logo">CampusConnect</h3>
+            </div>
+
+            <a href="login.html">Login</a>
         </nav>
     </header>
+    <section class="hero">
+        <!-- Landing Intro -->
+        <div class="hero-intro">
+            <h1 class="landing-title">🎓 Welcome to <span>CampusConnect</span></h1>
+            <p class="landing-subtitle">
+                Your all-in-one campus companion. Share posts, join clubs, explore internships, and buy/sell essentials
+                —
+                all from one place.
+            </p>
+            <a href="login.html" class="start-button">🚀 Get Started</a>
+        </div>
 
-    <main>
-        <section id="feed">
-            <h2>Campus Wall</h2>
-            <form id="postForm">
-                <input type="text" id="postTitle" placeholder="Title" required />
-                <textarea id="postContent" placeholder="What's on your mind?" required></textarea>
-                <button type="submit">Post</button>
-            </form>
-            <div id="feedPosts"></div>
-        </section>
+    </section>
+    <hr>
+    <!-- Features Overview -->
+    <section class="testimonial">
+        <div class="features-section">
+            <div class="feature-card">
+                <h3>📰 Campus Wall</h3>
+                <p>Post updates with title & content. Filter by department or category.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📅 Events</h3>
+                <p>Create events with RSVP, interest count & countdown timer.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📚 Notes Share</h3>
+                <p>Share or view notes via links. Filter by subject or semester.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Polls</h3>
+                <p>Vote on quick polls & view live results with bar charts.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔔 Noticeboard</h3>
+                <p>Important notices from admin/faculty. Marked as urgent/latest.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🧾 User Profile</h3>
+                <p>View user info like name, dept, year & recent activity (UI only).</p>
+            </div>
+            <div class="feature-card">
+                <h3>💬 CollegeQ</h3>
+                <p>Ask questions, tag topics & upvote useful student answers.</p>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <footer class="footer">
+        <div class="footer-content">
+            <h2>CampusConnect</h2>
+            <p>Empowering students through collaboration, sharing, and community.</p>
 
+            <div class="footer-links">
+                <a href="#feed">Wall</a>
+                <a href="#clubs">Clubs</a>
+                <a href="#events">Events</a>
+                <a href="#notes">Notes</a>
+                <a href="#marketplace">Marketplace</a>
+            </div>
 
-    </main>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="mailto:you@example.com"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
 
-    <footer>
-        <p>&copy; 2025 CampusConnect | Created by Subhasis Sahoo</p>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CampusConnect.</p>
+        </div>
     </footer>
 
-    <script src="js/main.js"></script>
+
 </body>
 
 </html>
