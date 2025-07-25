@@ -1,38 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CampusConnect | Events</title>
-  <link rel="stylesheet" href="style/style.css" />
+  <title>CampusConnect - Event Schedule</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 70px 20px 30px;
+      background: linear-gradient(to right, #240043, #000000);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      color: #ff5ccc;
+      text-shadow: 0 0 8px #b84aff;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #bbbbbb;
+      margin-top: 8px;
+    }
+
+    /* Venue */
+    .venue {
+      padding: 30px 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+      color: #cccccc;
+      line-height: 1.6;
+    }
+
+    /* Events Section */
+    .events {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .events h3 {
+      font-size: 1.8rem;
+      color: #ffccf5;
+      margin-bottom: 30px;
+      text-shadow: 0 0 6px #b84aff;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 6px solid #ff5ccc;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 20px auto;
+      text-align: left;
+      box-shadow: 0 10px 25px rgba(255, 0, 255, 0.05);
+      backdrop-filter: blur(20px);
+    }
+
+    .event-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .event-card p {
+      margin: 4px 0;
+      color: #dddddd;
+    }
+
+    .tags {
+      margin-top: 10px;
+    }
+
+    .tags span {
+      display: inline-block;
+      background-color: #ff5ccc;
+      color: #000000;
+      font-weight: 600;
+      border-radius: 14px;
+      padding: 5px 12px;
+      margin-right: 8px;
+      font-size: 0.75rem;
+    }
+  </style>
 </head>
+
 <body>
+
+  <!-- Navbar -->
   <header>
-    <h1>CampusConnect</h1>
-    
-    <nav>
-      <ul>
-        <li><a href="index.html">Feed</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="notes.html">Notes</a></li>
-        <li><a href="polls.html">Polls</a></li>
-        <li><a href="notices.html">Noticeboard</a></li>
-      </ul>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html" class="active-link">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
     </nav>
   </header>
 
-  <main>
-    <section id="events">
-      <h2>Upcoming Events</h2>
-      <div id="eventList">
-        <div><strong>Tech Fest 2025</strong><br>Date: July 20, 2025<br>Venue: Main Auditorium</div>
-        <div><strong>Workshop: AI Basics</strong><br>Date: July 25, 2025<br>Venue: Lab 2</div>
-      </div>
-    </section>
-  </main>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Event Schedule</h1>
+    <p>Home > Events</p>
+  </section>
 
-  <footer>
-    <p>&copy; 2025 CampusConnect | Created by Subhasis Sahoo</p>
+  <!-- Description -->
+  <section class="venue">
+    <p>
+      CampusConnect is a dynamic platform bringing students and tech lovers together through engaging events,
+      exciting competitions, and collaborative learning experiences.
+    </p>
+  </section>
+
+  <!-- Events List -->
+  <section class="events">
+    <h3>📅 Upcoming Events</h3>
+
+    <div class="event-card">
+      <h4>Algoverse 2025</h4>
+      <p>📅 Date: July 20, 2025</p>
+      <p>📍 Venue: Main Auditorium</p>
+      <div class="tags">
+        <span>Tech</span>
+        <span>AI</span>
+        <span>Code</span>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <h4>StackBuild 2025</h4>
+      <p>📅 Date: July 25, 2025</p>
+      <p>📍 Venue: Innovation Lab</p>
+      <div class="tags">
+        <span>DevOps</span>
+        <span>Cloud</span>
+        <span>Workshop</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 CampusConnect. All rights reserved.</p>
   </footer>
+<script src="js/nav.js"></script>
 </body>
+
 </html>

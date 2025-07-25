@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CampusConnect - Profiles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    h2.section-title {
+      margin: 30px 0 10px;
+      text-align: center;
+      font-size: 28px;
+      color: #ffccf5;
+      text-shadow: 0 0 4px #b84aff;
+    }
+
+    h2.section-title.faculty,
+    h2.section-title.student {
+      text-shadow: none;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 5px solid #c131cf;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff66cc;
+    }
+
+    .profile-info h3 {
+      margin: 5px 0;
+      color: #ffccf5;
+    }
+
+    .profile-info p {
+      margin: 2px 0;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .edit-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #c131cf;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #a020f0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background: #3c005c;
+      margin: 8% auto;
+      padding: 25px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .modal-content button {
+      background-color: #b84aff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .close {
+      color: #ffb3f0;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    label {
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">CampusConnect</div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html" class="active-link">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Faculty Section -->
+    <h2 class="section-title faculty">👩‍🏫 Faculty Profiles</h2>
+    <div class="profile-grid" id="facultySection">
+      <!-- Faculty Cards Injected Here -->
+    </div>
+
+    <!-- Student Section -->
+    <h2 class="section-title student">🎓 Student Profiles</h2>
+    <div class="profile-grid" id="studentSection">
+      <!-- Student Cards Injected Here -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Edit Profile</h3>
+      <input type="text" id="modalName" placeholder="Name">
+      <input type="text" id="modalDept" placeholder="Department">
+      <input type="text" id="modalRole" placeholder="Year / Role">
+      <input type="file" id="modalImage">
+      <button onclick="saveChanges()">Save</button>
+    </div>
+  </div>
+
+  <script>
+    const facultyData = [
+      { name: "Dr. Meena Sharma", department: "Physics", role: "Head of Department", image: "https://via.placeholder.com/100" },
+      { name: "Prof. Ravi Kumar", department: "Mathematics", role: "Senior Lecturer", image: "https://via.placeholder.com/100" },
+    ];
+
+    const studentData = [
+      { name: "Ananya Singh", department: "CSE", role: "3rd Year", image: "https://via.placeholder.com/100" },
+      { name: "Rahul Verma", department: "IT", role: "2nd Year", image: "https://via.placeholder.com/100" },
+    ];
+
+    const facultySection = document.getElementById("facultySection");
+    const studentSection = document.getElementById("studentSection");
+    const modal = document.getElementById("editModal");
+
+    let currentCard = null;
+
+    function createCard(data, section) {
+      const card = document.createElement("div");
+      card.className = "profile-card";
+
+      const img = document.createElement("img");
+      img.src = data.image;
+      img.className = "profile-pic";
+
+      const info = document.createElement("div");
+      info.className = "profile-info";
+      info.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>📚 ${data.department}</p>
+        <p>🎓 ${data.role}</p>
+      `;
+
+      const btn = document.createElement("button");
+      btn.className = "edit-btn";
+      btn.innerText = "Edit";
+      btn.onclick = () => openModal(card, img, info);
+
+      card.appendChild(img);
+      card.appendChild(info);
+      card.appendChild(btn);
+      section.appendChild(card);
+    }
+
+    facultyData.forEach(faculty => createCard(faculty, facultySection));
+    studentData.forEach(student => createCard(student, studentSection));
+
+    function openModal(card, img, info) {
+      currentCard = { card, img, info };
+      const lines = info.innerText.trim().split("\n");
+      document.getElementById("modalName").value = lines[0];
+      document.getElementById("modalDept").value = lines[1].replace("📚 ", "");
+      document.getElementById("modalRole").value = lines[2].replace("🎓 ", "");
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    function saveChanges() {
+      const name = document.getElementById("modalName").value;
+      const dept = document.getElementById("modalDept").value;
+      const role = document.getElementById("modalRole").value;
+      const file = document.getElementById("modalImage").files[0];
+
+      currentCard.info.innerHTML = `
+        <h3>${name}</h3>
+        <p>📚 ${dept}</p>
+        <p>🎓 ${role}</p>
+      `;
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          currentCard.img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      closeModal();
+    }
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
+  </script>
+</body>
+<footer>
+  @ 2025 CampusConnect. All rights reserved.
+</footer>
+<script src="js/nav.js"></script>
+
+</html>

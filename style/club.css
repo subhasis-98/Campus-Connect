@@ -1,0 +1,226 @@
+
+/* Base styles */
+main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto; /* Center the main content */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 4rem;
+  color: #f762ff;
+}
+
+.input-area {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+input,
+button {
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  width: 100px;
+  
+}
+
+input {
+  /* width: 300px; */
+}
+
+button {
+  background-color: #c131cf;
+  color: white;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+button:hover {
+  background-color: #a020f0;
+}
+
+.club-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid #c131cf;
+  position: relative;
+  transition: transform 0.2s ease;
+  width: 300px;
+  max-width: 500px; /* Limit card width for better layout */
+}
+
+.club-card:hover {
+  transform: translateY(-3px);
+}
+
+.club-card h3 {
+  margin-bottom: 0.4rem;
+  color: #ffd6f5;
+}
+
+.club-card .members {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+.club-card button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  background-color: #ff66cc;
+}
+
+.club-card button:hover {
+  background-color: #c131cf;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0d001a;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav a.active-link {
+  color: #f762ff;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #0d001a;
+  color: #fff;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .navbar {
+    justify-content: center;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #0d001a;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1rem;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  nav a {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  main {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .input-area {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  input {
+    width: 100%;
+    max-width: 250px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .club-card {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-left-width: 3px;
+    max-width: 100%;
+  }
+
+  .club-card h3 {
+    font-size: 1rem;
+  }
+
+  .club-card .members {
+    font-size: 0.75rem;
+  }
+
+  .club-card button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  footer {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

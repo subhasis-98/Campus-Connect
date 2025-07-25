@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Lost & Found - CampusConnect</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    /* Main Container */
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: auto;
+      padding: 30px 25px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    form {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    form input,
+    form textarea,
+    form button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px #c131cfaa;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    form button {
+      background: linear-gradient(90deg, #c131cf, #000000);
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background: linear-gradient(90deg, #de4de0, #2b0a2b);
+    }
+
+    .qcard {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      text-align: left;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .qcard.lost {
+      border-left: 6px solid #e74c3c;
+    }
+
+    .qcard.found {
+      border-left: 6px solid #2ecc71;
+    }
+
+    .qcard h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .qcard p {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #c131cf;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ✅ Navbar -->
+  <header>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html" class="active-link">Lost & Found</a>
+    </nav>
+  </header>
+
+  <!-- 🔍 Lost & Found Section -->
+  <div class="container">
+    <h2>🔎 Lost & Found</h2>
+
+    <div id="lostFoundList"></div>
+
+    <form id="lostFoundForm">
+      <h3>Report Lost or Found Item</h3>
+      <input type="text" id="itemTitle" placeholder="🎒 Item Title" required />
+      <textarea id="itemDescription" placeholder="📝 Description (where, when, etc.)" required></textarea>
+      <input type="text" id="itemStatus" placeholder="Lost or Found?" required />
+      <button type="submit">📌 Submit Report</button>
+    </form>
+  </div>
+
+  <!-- 📎 Footer -->
+  <footer>
+    &copy; 2025 CampusConnect. All rights reserved.
+  </footer>
+
+  <script>
+    const lostFoundList = document.getElementById('lostFoundList');
+    const lostFoundForm = document.getElementById('lostFoundForm');
+
+    let items = [
+      {
+        title: "Black Wallet",
+        description: "Lost in library on 3rd floor, contains ID and cash.",
+        status: "Lost"
+      },
+      {
+        title: "Bluetooth Earbuds",
+        description: "Found outside cafeteria table, brand: boAt.",
+        status: "Found"
+      }
+    ];
+
+    function displayLostFound(data) {
+      lostFoundList.innerHTML = '';
+      if (data.length === 0) {
+        lostFoundList.innerHTML = '<p class="no-results">No items reported yet 😕</p>';
+        return;
+      }
+
+      data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = `qcard ${item.status.toLowerCase()}`;
+        card.style.animationDelay = (index * 0.1) + 's';
+        card.innerHTML = `
+        <h3>${item.status === 'Found' ? '✅ Found:' : '❌ Lost:'} ${item.title}</h3>
+        <p>${item.description}</p>
+      `;
+        lostFoundList.appendChild(card);
+      });
+    }
+
+    lostFoundForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const title = document.getElementById('itemTitle').value.trim();
+      const desc = document.getElementById('itemDescription').value.trim();
+      const status = document.getElementById('itemStatus').value.trim();
+
+      if (!title || !desc || !status) return;
+
+      items.unshift({ title, description: desc, status });
+      displayLostFound(items);
+      lostFoundForm.reset();
+    });
+
+    displayLostFound(items);
+  </script>
+  <script src="js/nav.js"></script>
+
+</body>
+
+</html>

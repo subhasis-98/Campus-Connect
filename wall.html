@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Wall - CampusConnect</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #c131cf;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    input,
+    select,
+    button {
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    input {
+      flex: 2;
+    }
+
+    select {
+      flex: 1;
+    }
+
+    button {
+      background-color: #c131cf;
+      color: white;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    button:hover {
+      background-color: #a020f0;
+    }
+
+    .post {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      border-left: 5px solid #c131cf;
+      position: relative;
+    }
+
+    .timestamp {
+      font-size: 0.75rem;
+      color: #ccc;
+      margin-top: 5px;
+    }
+
+    .tag {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #c131cf;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+
+    .post-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .post-actions button {
+      flex: none;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 Navbar -->
+  <header>
+    <div class="logo">CampusConnect</div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html" class="active-link">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
+    </nav>
+  </header>
+
+  <!-- 🔹 Main Content -->
+  <main>
+    <h1>📢 Campus Wall</h1>
+
+    <div class="input-area">
+      <input type="text" id="postText" placeholder="What's happening?" />
+      <select id="postType">
+        <option value="general">General</option>
+        <option value="news">News (Auto-deletes in 24hr)</option>
+      </select>
+      <button onclick="submitPost()">Post</button>
+    </div>
+
+    <div id="postsContainer"></div>
+  </main>
+
+  <!-- 🔹 Footer -->
+  <footer>
+    © 2025 CampusConnect. All rights reserved.
+  </footer>
+
+  <!-- 🔹 Script -->
+  <script>
+    const postsContainer = document.getElementById("postsContainer");
+
+    function loadPosts() {
+      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
+      const now = Date.now();
+      const updatedPosts = posts.filter(post => {
+        return post.type !== "news" || (now - post.timestamp < 86400000);
+      });
+
+      localStorage.setItem("campusPosts", JSON.stringify(updatedPosts));
+      postsContainer.innerHTML = "";
+
+      updatedPosts
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .forEach((post, index) => {
+          const div = document.createElement("div");
+          div.className = "post";
+          div.innerHTML = `
+            <div class="post-text" contenteditable="false">${post.text}</div>
+            <div class="timestamp">🕒 ${new Date(post.timestamp).toLocaleString()}</div>
+            <div class="tag">${post.type === "news" ? "News 🕘" : "General"}</div>
+            <div class="post-actions">
+              <button onclick="editPost(${index}, this)">Edit</button>
+              <button onclick="deletePost(${index})">Delete</button>
+            </div>
+          `;
+          postsContainer.appendChild(div);
+        });
+    }
+
+    function submitPost() {
+      const text = document.getElementById("postText").value.trim();
+      const type = document.getElementById("postType").value;
+
+      if (!text) {
+        alert("Please write something!");
+        return;
+      }
+
+      const post = {
+        text,
+        type,
+        timestamp: Date.now()
+      };
+
+      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
+      posts.push(post);
+      localStorage.setItem("campusPosts", JSON.stringify(posts));
+
+      document.getElementById("postText").value = "";
+      loadPosts();
+    }
+
+    function deletePost(index) {
+      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
+      posts.splice(index, 1);
+      localStorage.setItem("campusPosts", JSON.stringify(posts));
+      loadPosts();
+    }
+
+    function editPost(index, btn) {
+      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
+      const parent = btn.closest(".post");
+      const content = parent.querySelector(".post-text");
+
+      if (btn.textContent === "Edit") {
+        content.contentEditable = true;
+        content.focus();
+        btn.textContent = "Save";
+      } else {
+        content.contentEditable = false;
+        posts[index].text = content.innerText;
+        localStorage.setItem("campusPosts", JSON.stringify(posts));
+        btn.textContent = "Edit";
+        loadPosts();
+      }
+    }
+
+    window.onload = loadPosts;
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Clubs - CampusConnect</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #f762ff;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    input,
+    button {
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    input {
+      width: 300px;
+    }
+
+    button {
+      background-color: #c131cf;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #a020f0;
+    }
+
+    .club-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border-left: 5px solid #c131cf;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .club-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .club-card h3 {
+      margin-bottom: 0.4rem;
+      color: #ffd6f5;
+    }
+
+    .club-card .members {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+
+    .club-card button {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      background-color: #ff66cc;
+    }
+
+    .club-card button:hover {
+      background-color: #c131cf;
+    }
+
+    footer {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffccf5;
+      text-align: center;
+      padding: 1rem;
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 Navbar -->
+  <header>
+    <div class="logo">CampusConnect</div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="home.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html" class="active-link">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
+    </nav>
+  </header>
+
+  <!-- 🔹 Main Section -->
+  <main>
+    <h1>🎓 Student Clubs</h1>
+
+    <div class="input-area">
+      <input type="text" id="clubName" placeholder="Enter club name" />
+      <button onclick="createClub()">Create Club</button>
+    </div>
+
+    <div id="clubsContainer"></div>
+  </main>
+
+  <!-- 🔹 Footer (same as original) -->
+  <footer>
+    © 2025 CampusConnect. All rights reserved.
+  </footer>
+
+  <!-- 🔹 Script -->
+  <script>
+    const clubsContainer = document.getElementById("clubsContainer");
+    const currentUser = "student@example.com"; // 🔐 Replace with actual login in real project
+
+    function createClub() {
+      const name = document.getElementById("clubName").value.trim();
+      if (!name) return alert("Please enter a club name.");
+
+      let clubs = JSON.parse(localStorage.getItem("studentClubs") || "[]");
+      if (clubs.find(c => c.name.toLowerCase() === name.toLowerCase())) {
+        alert("That club already exists!");
+        return;
+      }
+
+      clubs.push({ name, members: [] });
+      localStorage.setItem("studentClubs", JSON.stringify(clubs));
+      document.getElementById("clubName").value = "";
+      loadClubs();
+    }
+
+    function toggleMembership(index) {
+      let clubs = JSON.parse(localStorage.getItem("studentClubs") || "[]");
+      let club = clubs[index];
+
+      if (club.members.includes(currentUser)) {
+        club.members = club.members.filter(m => m !== currentUser);
+      } else {
+        club.members.push(currentUser);
+      }
+
+      localStorage.setItem("studentClubs", JSON.stringify(clubs));
+      loadClubs();
+    }
+
+    function loadClubs() {
+      let clubs = JSON.parse(localStorage.getItem("studentClubs") || "[]");
+      clubsContainer.innerHTML = "";
+
+      clubs.forEach((club, index) => {
+        const isMember = club.members.includes(currentUser);
+        const div = document.createElement("div");
+        div.className = "club-card";
+        div.innerHTML = `
+          <h3>${club.name}</h3>
+          <div class="members">👥 ${club.members.length} Member${club.members.length !== 1 ? 's' : ''}</div>
+          <button onclick="toggleMembership(${index})">${isMember ? "Leave Club" : "Join Club"}</button>
+        `;
+        clubsContainer.appendChild(div);
+      });
+    }
+
+    window.onload = loadClubs;
+
+
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+
+</html>

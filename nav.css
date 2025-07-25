@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background: linear-gradient(to right, #1b0036, #000000);
+  font-family: Arial, sans-serif;
+  color: white;
+  /* min-height: 100vh;
+  display: flex;
+  flex-direction: column; */
+}
+
+
+    header {
+      background-color: #0d001a;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      flex-wrap: nowrap;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff66cc;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #ffccf5;
+    }
+
+    .active-link {
+      font-weight: bold;
+      color: #ff66cc;
+    }
+
+    /* Hamburger button - hidden on large screens */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      header {
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+
+      /* Show hamburger */
+      .hamburger {
+        display: flex;
+      }
+
+      nav {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        margin-top: 0.5rem;
+        background-color: #0d001a;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a {
+        margin: 0.4rem 0;
+        margin-left: 0;
+        /* padding: 0.5rem 1rem; */
+      }
+    }
+
+
+/* Footer */
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #0d001a;
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffb3f0;
+  font-size: 0.9rem;
+  padding: 15px 20px; /* Reduced padding for consistency */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.5px; /* Slightly reduced for readability */
+}

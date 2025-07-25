@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>CollegeQ - CampusConnect Q&A</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    /* Container */
+    .container {
+      background: rgba(255 255 255 / 0.85);
+      max-width: 600px;
+      margin: auto;
+      padding: 30px 25px;
+      border-radius: 20px;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      margin-bottom: 25px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px #c131cfaa;
+    }
+
+    /* QCard */
+    .qcard {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      color: #1a1a1a;
+      text-align: left;
+      cursor: default;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .qcard h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      color: #c131cf;
+    }
+
+    .qcard p {
+      font-size: 1rem;
+      line-height: 1.3;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .view-details {
+      display: inline-block;
+      color: #c131cf;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .view-details:hover {
+      color: #de4de0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Form */
+    form {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    form input,
+    form textarea,
+    form button {
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px #c131cfaa;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    form button {
+      background: linear-gradient(90deg, #c131cf, #000000);
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background: linear-gradient(90deg, #de4de0, #2b0a2b);
+    }
+
+    /* No results message */
+    .no-results {
+      text-align: center;
+      color: #c131cf;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    /* Modal */
+    .modal-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1500;
+    }
+
+    .modal-content {
+      background: rgba(255 255 255 / 0.9);
+      padding: 25px 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      color: #1a1a1a;
+      text-align: left;
+      position: relative;
+    }
+
+    .modal-content h3 {
+      color: #c131cf;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: #c131cf;
+      cursor: pointer;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .modal-close:hover {
+      color: #de4de0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">CampusConnect</div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html" class="active-link">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>CollegeQ - Q&A Hub</h2>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="🔍 Search questions..." />
+    </div>
+
+    <div id="questionsList">
+      <!-- Q&A cards will appear here -->
+    </div>
+
+    <form id="qaForm">
+      <h3>Add Your Question & Answer</h3>
+      <input type="text" id="newQuestion" placeholder="❓ Your Question" required />
+      <textarea id="newAnswer" placeholder="💡 Your Answer" required></textarea>
+      <button type="submit">➕ Submit Q&A</button>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-bg" id="modal">
+    <div class="modal-content">
+      <div class="modal-close" id="modalClose">&times;</div>
+      <h3 id="modalQuestion"></h3>
+      <p id="modalAnswer"></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 CampusConnect. All rights reserved.
+  </footer>
+
+  <script>
+    const questionsList = document.getElementById('questionsList');
+    const modal = document.getElementById('modal');
+    const modalQuestion = document.getElementById('modalQuestion');
+    const modalAnswer = document.getElementById('modalAnswer');
+    const modalClose = document.getElementById('modalClose');
+    const searchInput = document.getElementById('searchInput');
+    const qaForm = document.getElementById('qaForm');
+
+    // Initial questions array
+    let questions = [
+      {
+        question: "How to prepare for coding interviews?",
+        answer: "Focus on data structures and algorithms, practice coding problems daily, and understand problem-solving patterns. Use platforms like LeetCode, HackerRank, and mock interviews."
+      },
+      {
+        question: "What resources are best for learning web development?",
+        answer: "Start with HTML, CSS, and JavaScript basics. Use free resources like MDN Web Docs, freeCodeCamp, and then move on to frameworks like React or Vue."
+      },
+      {
+        question: "How to manage time during college exams?",
+        answer: "Make a study timetable, prioritize difficult subjects first, take short breaks, and ensure proper sleep. Practice previous years' question papers."
+      }
+    ];
+
+    // Display questions with fade-in animation
+    function displayQuestions(list) {
+      questionsList.innerHTML = '';
+      if (list.length === 0) {
+        questionsList.innerHTML = '<p class="no-results">No questions found 😕</p>';
+        return;
+      }
+
+      list.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'qcard';
+        card.style.animationDelay = (index * 0.1) + 's';
+        card.innerHTML = `
+        <h3>❓ ${item.question}</h3>
+        <span class="view-details" data-index="${index}">View Details</span>
+      `;
+        questionsList.appendChild(card);
+      });
+    }
+
+    // Modal open on clicking View Details
+    questionsList.addEventListener('click', e => {
+      if (e.target.classList.contains('view-details')) {
+        const idx = e.target.getAttribute('data-index');
+        modalQuestion.textContent = questions[idx].question;
+        modalAnswer.textContent = questions[idx].answer;
+        modal.style.display = 'flex';
+      }
+    });
+
+    modalClose.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase();
+      const filtered = questions.filter(q => q.question.toLowerCase().includes(term) || q.answer.toLowerCase().includes(term));
+      displayQuestions(filtered);
+    });
+
+    // Add new Q&A
+    qaForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const newQ = document.getElementById('newQuestion').value.trim();
+      const newA = document.getElementById('newAnswer').value.trim();
+
+      if (!newQ || !newA) return;
+
+      questions.unshift({ question: newQ, answer: newA });
+      displayQuestions(questions);
+      qaForm.reset();
+      searchInput.value = ''; // reset search
+    });
+
+    // Initial display
+    displayQuestions(questions);
+  </script>
+  <script src="js/nav.js"></script>
+
+</body>
+
+</html>

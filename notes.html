@@ -1,29 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CampusConnect</title>
-  <link rel="stylesheet" href="style/style.css" />
+  <title>Notes Share - CampusConnect</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    /* Container */
+    .container {
+      background: rgba(255 255 255 / 0.07);
+      max-width: 480px;
+      margin: 100px auto;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgb(255 0 255 / 0.15);
+      color: #eee;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .emoji {
+      font-size: 48px;
+      margin-bottom: 15px;
+      animation: pulse 1.5s infinite;
+      text-shadow: 0 0 12px #ff5ccc;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #ff5ccc;
+      text-shadow: 0 0 8px #b84aff;
+    }
+
+    p {
+      font-style: italic;
+      margin-bottom: 24px;
+      color: #dda0f7;
+    }
+
+    /* Form inputs & buttons */
+    form input,
+    form button,
+    .search input {
+      width: 100%;
+      font-size: 1rem;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #440044;
+      margin-bottom: 15px;
+      transition: border-color 0.3s ease;
+      background: rgba(255 255 255 / 0.15);
+      color: #eee;
+      backdrop-filter: blur(10px);
+    }
+
+    form input::placeholder,
+    .search input::placeholder {
+      color: #d8a6e3;
+    }
+
+    form input:focus,
+    .search input:focus {
+      outline: none;
+      border-color: #ff5ccc;
+      box-shadow: 0 0 12px #ff5cccaa;
+      background: rgba(255 255 255 / 0.25);
+    }
+
+    /* Button */
+    button {
+      background: linear-gradient(90deg, #ff5ccc, #6c006c);
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-shadow: 0 0 5px #ff8ef1;
+      box-shadow: 0 0 15px #ff5ccc;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #ff8ef1, #440044);
+      box-shadow: 0 0 25px #ff8ef1;
+    }
+
+    /* Search */
+    .search {
+      margin-top: 25px;
+    }
+
+    /* Notes list */
+    #notesList {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .note {
+      background: rgba(255 255 255 / 0.15);
+      border-radius: 14px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 20px rgb(255 0 255 / 0.2);
+      transition: transform 0.2s ease;
+      backdrop-filter: blur(10px);
+      color: #eee;
+    }
+
+    .note:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #ff5ccc;
+    }
+
+    .note h3 {
+      margin-bottom: 6px;
+      font-size: 1.15rem;
+      color: #ff5ccc;
+      text-shadow: 0 0 6px #b84aff;
+    }
+
+    .note p {
+      margin: 3px 0;
+      font-size: 0.9rem;
+      color: #dda0f7;
+    }
+
+    .note a {
+      margin-top: 8px;
+      display: inline-block;
+      color: #ff5ccc;
+      font-weight: 600;
+      text-decoration: none;
+      text-shadow: 0 0 4px #ff8ef1;
+    }
+
+    .note a:hover {
+      text-decoration: underline;
+      text-shadow: 0 0 8px #ffb3f0;
+    }
+
+    .no-notes {
+      text-align: center;
+      color: #ffb3f0;
+      font-size: 1rem;
+      margin-top: 30px;
+      text-shadow: 0 0 8px #b84aff;
+    }
+
+
+
+
+    @media (max-width: 768px) {
+      .container {
+        max-width: 90%;
+        padding: 20px 15px;
+        margin: 20px auto;
+      }
+
+      .emoji {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      form input,
+      form button,
+      .search input {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+      }
+
+      .note h3 {
+        font-size: 1rem;
+      }
+
+      .note p {
+        font-size: 0.85rem;
+      }
+
+      .note {
+        padding: 12px 16px;
+      }
+
+
+    }
+
+    @media (max-width: 480px) {
+      .emoji {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+      }
+
+      form input,
+      form button,
+      .search input {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+      }
+
+      .note {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+      }
+
+      .note h3 {
+        font-size: 0.95rem;
+      }
+
+      .note p {
+        font-size: 0.8rem;
+      }
+
+
+    }
+  </style>
 </head>
+
 <body>
+
   <header>
-    <h1>CampusConnect</h1>
-    <button id="themeToggle">🌙 Dark Mode</button>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html" class="active-link">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
+    </nav>
   </header>
+  <div class="container">
+    <div class="emoji">📚</div>
+    <h2>Notes Share</h2>
+    <p>Upload & access notes by subject or semester 🔍</p>
 
-  <main>
-    <section id="feed">
-      <h2>Campus Wall</h2>
-      <form id="postForm">
-        <input type="text" id="postTitle" placeholder="Title" required />
-        <textarea id="postContent" placeholder="What's on your mind?" required></textarea>
-        <button type="submit">Post</button>
-      </form>
-      <div id="feedPosts"></div>
-    </section>
-  </main>
+    <form id="noteForm">
+      <input type="text" id="noteTitle" placeholder="📄 Note Title" required />
+      <input type="text" id="noteSubject" placeholder="📘 Subject" required />
+      <input type="text" id="noteSemester" placeholder="🎓 Semester" required />
+      <input type="url" id="noteLink" placeholder="🔗 Note Link (Google Drive / PDF)" required />
+      <button type="submit">➕ Add Note</button>
+    </form>
 
-  <script src="js/main.js"></script>
+    <div class="search">
+      <input type="text" id="searchInput" placeholder="🔍 Search by title..." />
+    </div>
+
+    <div id="notesList"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 CampusConnect. All rights reserved.
+  </footer>
+
+  <script>
+    const form = document.getElementById('noteForm');
+    const notesList = document.getElementById('notesList');
+    const searchInput = document.getElementById('searchInput');
+
+    let notes = [];
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const title = document.getElementById('noteTitle').value.trim();
+      const subject = document.getElementById('noteSubject').value.trim();
+      const semester = document.getElementById('noteSemester').value.trim();
+      const link = document.getElementById('noteLink').value.trim();
+
+      if (!title || !subject || !semester || !link) return;
+
+      notes.unshift({ title, subject, semester, link });
+      displayNotes(notes);
+      form.reset();
+    });
+
+    searchInput.addEventListener('input', function () {
+      const term = this.value.toLowerCase();
+      const filtered = notes.filter(n => n.title.toLowerCase().includes(term));
+      displayNotes(filtered);
+    });
+
+    function displayNotes(noteArray) {
+      notesList.innerHTML = '';
+      if (noteArray.length === 0) {
+        notesList.innerHTML = '<p class="no-notes">No notes found 😕</p>';
+        return;
+      }
+
+      noteArray.forEach(note => {
+        const div = document.createElement('div');
+        div.className = 'note';
+        div.innerHTML = `
+        <h3>📄 ${note.title}</h3>
+        <p>📘 <strong>Subject:</strong> ${note.subject}</p>
+        <p>🎓 <strong>Semester:</strong> ${note.semester}</p>
+        <a href="${note.link}" target="_blank" rel="noopener noreferrer">🔗 View Note</a>
+      `;
+        notesList.appendChild(div);
+      });
+    }
+  </script>
+<script src="js/nav.js"></script>
 </body>
+
 </html>

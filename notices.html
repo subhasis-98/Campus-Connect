@@ -1,38 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CampusConnect | Notices</title>
-  <link rel="stylesheet" href="style/style.css" />
+  <title>CampusConnect – Notices (Admin Edit Demo)</title>
+  <link rel="stylesheet" href="nav.css">
+  <style>
+    select {
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .noticeboard {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-grow: 1;
+    }
+
+    .notice-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      border-left: 5px solid #ffffff30;
+      transition: .4s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .notice-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notice-card.pinned {
+      border: 2px solid #ffcc00;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: .75rem;
+      margin-bottom: .4rem;
+    }
+
+    .tag.exam {
+      background: #7b5cff;
+    }
+
+    .tag.event {
+      background: #00c5a0;
+    }
+
+    .tag.general {
+      background: #f28500;
+    }
+
+    .notice-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .notice-body {
+      margin-top: .5rem;
+      font-size: .95rem;
+      line-height: 1.4;
+    }
+
+    .edit-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #555;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .75rem;
+    }
+
+    input,
+    select.edit,
+    textarea {
+      width: 100%;
+      margin: 4px 0;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .save-cancel {
+      margin-top: .5rem;
+      text-align: right;
+    }
+
+    .save,
+    .cancel {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    .save {
+      background: #00c5a0;
+      color: white;
+    }
+
+    .cancel {
+      background: #999;
+      color: white;
+    }
+
+
+    /* To prevent content behind navbar */
+    #mainContent {
+      margin-top: 70px;
+      flex-grow: 1;
+    }
+  </style>
 </head>
+
 <body>
+
   <header>
-    <h1>CampusConnect</h1>
-    
-    <nav>
-      <ul>
-        <li><a href="index.html">Feed</a></li>
-        <li><a href="events.html">Events</a></li>
-        <li><a href="notes.html">Notes</a></li>
-        <li><a href="polls.html">Polls</a></li>
-        <li><a href="notices.html">Noticeboard</a></li>
-      </ul>
+    <div class="logo">CampusConnect</div>
+    <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="wall.html">Wall</a>
+      <a href="events.html">Events</a>
+      <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a>
+      <a href="notices.html" class="active-link">Notices</a>
+      <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a>
+      <a href="lostfound.html">Lost & Found</a>
     </nav>
   </header>
 
-  <main>
-    <section id="notices">
-      <h2>Important Notices</h2>
-      <ul>
-        <li>📢 Exam form submission deadline: 10th July</li>
-        <li>📢 Internship registration ends this Friday</li>
-      </ul>
-    </section>
+  <main id="mainContent">
+    <h1>📢 Campus Notices</h1>
+    <div style="text-align:center;">
+      <select id="filterCategory" onchange="filterNotices()">
+        <option value="all">🔍 Show All</option>
+        <option value="exam">📚 Exam</option>
+        <option value="event">🎉 Event</option>
+        <option value="general">📝 General</option>
+      </select>
+    </div>
+    <div class="noticeboard" id="noticeboard">
+      <!-- Example Notices -->
+      <div class="notice-card pinned show" data-category="general" data-date="2025-07-21">
+        <div class="tag">📌 PINNED</div>
+        <div class="notice-title">Welcome to CampusConnect</div>
+        <div class="notice-body">Stay informed with live notices, events, exams, and more.</div>
+        <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>
+      </div>
+      <div class="notice-card show" data-category="exam" data-date="2025-07-22">
+        <div class="tag exam">📚 Exam</div>
+        <div class="notice-title">Mid-Sem Exam Schedule Released</div>
+        <div class="notice-body">Check the full schedule and seating plans...</div>
+        <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>
+      </div>
+      <div class="notice-card show" data-category="event" data-date="2025-07-20">
+        <div class="tag event">🎉 Event</div>
+        <div class="notice-title">TechFest Registrations Open!</div>
+        <div class="notice-body">Register for hackathons, workshops, and competitions...</div>
+        <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>
+      </div>
+    </div>
   </main>
 
   <footer>
-    <p>&copy; 2025 CampusConnect | Created by Subhasis Sahoo</p>
+    © 2025 CampusConnect. All rights reserved.
   </footer>
+
+  <script>
+    const ADMIN_PASS = 'campus2025';
+
+    function filterNotices() {
+      const sel = document.getElementById('filterCategory').value;
+      document.querySelectorAll('.notice-card').forEach(card => {
+        const cat = card.dataset.category;
+        card.style.display = (sel === 'all' || sel === cat) ? 'block' : 'none';
+      });
+    }
+
+    window.addEventListener('load', () => {
+      const container = document.getElementById('noticeboard');
+      Array.from(container.children)
+        .sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date))
+        .forEach(c => container.appendChild(c));
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.notice-card').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) card.classList.add('show');
+      });
+    });
+
+    function attemptEdit(btn) {
+      const pass = prompt('Admin password?');
+      if (pass === ADMIN_PASS) activateEdit(btn.closest('.notice-card'));
+      else alert('❌ Incorrect password');
+    }
+
+    function activateEdit(card) {
+      const cat = card.dataset.category;
+      const date = card.dataset.date;
+      const title = card.querySelector('.notice-title').textContent;
+      const body = card.querySelector('.notice-body').textContent;
+
+      card.innerHTML = `
+        <label>Category:</label>
+        <select class="edit">
+          <option value="exam">📚 Exam</option>
+          <option value="event">🎉 Event</option>
+          <option value="general">📝 General</option>
+        </select>
+        <label>Date:</label>
+        <input type="date" class="edit" value="${date}" />
+        <label>Title:</label>
+        <input type="text" class="edit" value="${title}" />
+        <label>Body:</label>
+        <textarea class="edit" rows="3">${body}</textarea>
+        <div class="save-cancel">
+          <button class="save" onclick="saveEdit(this)">Save</button>
+          <button class="cancel" onclick="cancelEdit(this)">Cancel</button>
+        </div>`;
+
+      const sel = card.querySelector('select.edit');
+      sel.value = card.dataset.category;
+    }
+
+    function saveEdit(btn) {
+      const card = btn.closest('.notice-card');
+      const selects = card.querySelectorAll('select.edit, input.edit, textarea.edit');
+      const [sel, inputDate, inputTitle, inputBody] = selects;
+
+      card.dataset.category = sel.value;
+      card.dataset.date = inputDate.value;
+      const catTag = sel.value === 'exam' ? '📚 Exam' : sel.value === 'event' ? '🎉 Event' : '📝 General';
+      card.innerHTML = `
+        <div class="tag ${sel.value}">${catTag}</div>
+        <div class="notice-title">${inputTitle.value}</div>
+        <div class="notice-body">${inputBody.value}</div>
+        <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>`;
+      debounceSort();
+    }
+
+    function cancelEdit(btn) {
+      window.location.reload();
+    }
+
+    let sortTimeout;
+    function debounceSort() {
+      clearTimeout(sortTimeout);
+      sortTimeout = setTimeout(() => {
+        const container = document.getElementById('noticeboard');
+        Array.from(container.children)
+          .sort((a, b) => new Date(b.dataset.date) - new Date(a.dataset.date))
+          .forEach(c => container.appendChild(c));
+      }, 300);
+    }
+  </script>
+  <script src="js/nav.js"></script>
 </body>
+
 </html>
