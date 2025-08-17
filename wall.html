@@ -3,227 +3,444 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Wall - CampusConnect</title>
-  <link rel="stylesheet" href="nav.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="nav.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f;
+      color: #f2e9fc;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     main {
       flex: 1;
-      padding: 2rem;
-      max-width: 800px;
+      padding: 2rem 1rem;
+      max-width: 900px;
       margin: auto;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: #c131cf;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 8px rgba(193, 49, 207, 0.3);
     }
 
     .input-area {
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(160, 32, 240, 0.25);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
       flex-wrap: wrap;
     }
 
     input,
     select,
     button {
-      padding: 0.6rem;
+      padding: 0.75rem;
       border-radius: 10px;
       border: none;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
 
     input {
-      flex: 2;
+      flex: 3;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      border: 1px solid #e1d4f5;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
     }
 
     select {
       flex: 1;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      border: 1px solid #e1d4f5;
+      cursor: pointer;
     }
 
     button {
-      background-color: #c131cf;
+      background: #c131cf;
       color: white;
       cursor: pointer;
       flex: 1;
+      font-weight: 500;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     button:hover {
-      background-color: #a020f0;
+      background: #a020f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .controls select {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #e1d4f5;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(160, 32, 240, 0.1);
     }
 
     .post {
       background: rgba(255, 255, 255, 0.08);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
       border-left: 5px solid #c131cf;
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
       position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(160, 32, 240, 0.2);
+    }
+
+    .post-content {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
     }
 
     .timestamp {
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: #ccc;
-      margin-top: 5px;
+      margin-top: 0.5rem;
     }
 
     .tag {
       position: absolute;
-      top: 10px;
+      top: 15px;
       right: 15px;
       background: #c131cf;
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-size: 0.8rem;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
 
     .post-actions {
-      margin-top: 10px;
+      margin-top: 1rem;
       display: flex;
-      gap: 10px;
+      gap: 0.75rem;
     }
 
     .post-actions button {
       flex: none;
-      padding: 4px 10px;
-      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
       border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f2e9fc;
+      border: 1px solid #e1d4f5;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .post-actions button:hover {
+      background: #c131cf;
+      color: white;
+      border-color: #c131cf;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2e9fc;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(160, 32, 240, 0.25);
+    }
+
+    .footer-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #c131cf;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #f2e9fc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #c131cf;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social a {
+      color: #f2e9fc;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: #c131cf;
+    }
+
+    .footer-bottom {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .input-area {
+        flex-direction: column;
+      }
+
+      input,
+      select,
+      button {
+        flex: none;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .controls select {
+        width: 100%;
+      }
+
+      .post {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- 🔹 Navbar -->
   <header>
     <div class="logo">CampusConnect</div>
     <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span> <span></span> <span></span>
     </div>
     <nav id="nav-menu" class="nav-menu">
-      <a href="index.html">Home</a>
-      <a href="wall.html" class="active-link">Wall</a>
-      <a href="events.html">Events</a>
-      <a href="notes.html">Notes</a>
-      <a href="polls.html">Polls</a>
-      <a href="notices.html">Notices</a>
-      <a href="profiles.html">Profiles</a>
-      <a href="club.html">Clubs</a>
-      <a href="collegeQ.html">Q&A</a>
+      <a href="index.html">Home</a> <a href="wall.html">Wall</a>
+      <a href="events.html" class="active-link">Events</a>
+      <a href="notes.html">Notes</a> <a href="polls.html">Polls</a>
+      <a href="notices.html">Notices</a> <a href="profiles.html">Profiles</a>
+      <a href="club.html">Clubs</a> <a href="collegeQ.html">Q&A</a>
       <a href="lostfound.html">Lost & Found</a>
     </nav>
   </header>
-
-  <!-- 🔹 Main Content -->
   <main>
-    <h1>📢 Campus Wall</h1>
+    <h1>📣 Campus Wall</h1>
 
     <div class="input-area">
-      <input type="text" id="postText" placeholder="What's happening?" />
+      <input type="text" id="postTitle" placeholder="Share what's on your mind..." />
       <select id="postType">
-        <option value="general">General</option>
-        <option value="news">News (Auto-deletes in 24hr)</option>
+        <option value="General">General</option>
+        <option value="News">News</option>
       </select>
-      <button onclick="submitPost()">Post</button>
+      <button onclick="addPost()">Post</button>
     </div>
 
-    <div id="postsContainer"></div>
+    <div class="controls">
+      <select id="filter" onchange="renderPosts()">
+        <option value="All">Filter: All</option>
+        <option value="News">Filter: News</option>
+        <option value="General">Filter: General</option>
+      </select>
+
+      <select id="sort" onchange="renderPosts()">
+        <option value="newest">Sort: Newest</option>
+        <option value="oldest">Sort: Oldest</option>
+        <option value="mostLiked">Sort: Most Liked</option>
+      </select>
+    </div>
+
+    <div id="wall"></div>
   </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <h2>CampusConnect</h2>
+      <p>
+        Empowering students through collaboration, sharing, and community.
+      </p>
 
-  <!-- 🔹 Footer -->
-  <footer>
-    © 2025 CampusConnect. All rights reserved.
+      <div class="footer-links">
+        <a href="#feed">Wall</a>
+        <a href="#clubs">Clubs</a>
+        <a href="#events">Events</a>
+        <a href="#notes">Notes</a>
+        <a href="#marketplace">Marketplace</a>
+      </div>
+
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:you@example.com"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 CampusConnect.</p>
+    </div>
   </footer>
-
-  <!-- 🔹 Script -->
   <script>
-    const postsContainer = document.getElementById("postsContainer");
+    let posts = [];
 
-    function loadPosts() {
-      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
-      const now = Date.now();
-      const updatedPosts = posts.filter(post => {
-        return post.type !== "news" || (now - post.timestamp < 86400000);
-      });
-
-      localStorage.setItem("campusPosts", JSON.stringify(updatedPosts));
-      postsContainer.innerHTML = "";
-
-      updatedPosts
-        .sort((a, b) => b.timestamp - a.timestamp)
-        .forEach((post, index) => {
-          const div = document.createElement("div");
-          div.className = "post";
-          div.innerHTML = `
-            <div class="post-text" contenteditable="false">${post.text}</div>
-            <div class="timestamp">🕒 ${new Date(post.timestamp).toLocaleString()}</div>
-            <div class="tag">${post.type === "news" ? "News 🕘" : "General"}</div>
-            <div class="post-actions">
-              <button onclick="editPost(${index}, this)">Edit</button>
-              <button onclick="deletePost(${index})">Delete</button>
-            </div>
-          `;
-          postsContainer.appendChild(div);
-        });
-    }
-
-    function submitPost() {
-      const text = document.getElementById("postText").value.trim();
+    function addPost() {
+      const title = document.getElementById("postTitle").value.trim();
       const type = document.getElementById("postType").value;
-
-      if (!text) {
-        alert("Please write something!");
-        return;
-      }
+      if (!title) return;
 
       const post = {
-        text,
+        id: Date.now(),
+        title,
         type,
-        timestamp: Date.now()
+        time: new Date(),
+        likes: 0,
       };
 
-      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
       posts.push(post);
-      localStorage.setItem("campusPosts", JSON.stringify(posts));
-
-      document.getElementById("postText").value = "";
-      loadPosts();
+      document.getElementById("postTitle").value = "";
+      renderPosts();
     }
 
-    function deletePost(index) {
-      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
-      posts.splice(index, 1);
-      localStorage.setItem("campusPosts", JSON.stringify(posts));
-      loadPosts();
-    }
+    function renderPosts() {
+      const wall = document.getElementById("wall");
+      wall.innerHTML = "";
 
-    function editPost(index, btn) {
-      const posts = JSON.parse(localStorage.getItem("campusPosts") || "[]");
-      const parent = btn.closest(".post");
-      const content = parent.querySelector(".post-text");
+      const filter = document.getElementById("filter").value;
+      const sort = document.getElementById("sort").value;
 
-      if (btn.textContent === "Edit") {
-        content.contentEditable = true;
-        content.focus();
-        btn.textContent = "Save";
-      } else {
-        content.contentEditable = false;
-        posts[index].text = content.innerText;
-        localStorage.setItem("campusPosts", JSON.stringify(posts));
-        btn.textContent = "Edit";
-        loadPosts();
+      let filtered = posts.filter((p) => {
+        if (filter === "All") return true;
+        return p.type === filter;
+      });
+
+      if (sort === "newest") {
+        filtered.sort((a, b) => b.time - a.time);
+      } else if (sort === "oldest") {
+        filtered.sort((a, b) => a.time - b.time);
+      } else if (sort === "mostLiked") {
+        filtered.sort((a, b) => b.likes - a.likes);
+      }
+
+      const now = new Date();
+      filtered = filtered.filter((post) => {
+        const hours = (now - new Date(post.time)) / 36e5;
+        return hours < 24;
+      });
+
+      for (const post of filtered) {
+        const postEl = document.createElement("div");
+        postEl.className = "post";
+
+        postEl.innerHTML = `
+            <div class="post-content">${post.title}</div>
+            <div class="timestamp">${timeAgo(post.time)}</div>
+            <div class="tag">${post.type}</div>
+            <div class="post-actions">
+              <button onclick="likePost(${post.id})">👍 ${post.likes}</button>
+            </div>
+          `;
+        wall.appendChild(postEl);
       }
     }
 
-    window.onload = loadPosts;
+    function likePost(id) {
+      const post = posts.find((p) => p.id === id);
+      if (post) {
+        post.likes++;
+        renderPosts();
+      }
+    }
+
+    function timeAgo(date) {
+      const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      const intervals = [
+        { label: "year", seconds: 31536000 },
+        { label: "month", seconds: 2592000 },
+        { label: "day", seconds: 86400 },
+        { label: "hour", seconds: 3600 },
+        { label: "minute", seconds: 60 },
+        { label: "second", seconds: 1 },
+      ];
+
+      for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count > 0)
+          return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
+      }
+      return "Just now";
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      posts = posts.filter((post) => (now - new Date(post.time)) / 36e5 < 24);
+      renderPosts();
+    }, 60000);
   </script>
-  <script src="js/nav.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Wall - CampusConnect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #48bb78;
+            --error-color: #f56565;
+            --warning-color: #ed8936;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7fafc;
+            --bg-tertiary: #edf2f7;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --navbar-bg: rgba(255, 255, 255, 0.95);
+            --navbar-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --text-primary: #f7fafc;
+            --text-secondary: #e2e8f0;
+            --text-muted: #a0aec0;
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            --border-color: #4a5568;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --navbar-bg: rgba(26, 32, 44, 0.95);
+            --navbar-border: rgba(74, 85, 104, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -1;
+            opacity: 1;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] body::before {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--navbar-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .logo::before {
+            content: '🎓';
+            font-size: 1.75rem;
+            filter: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .nav-menu {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            border-radius: 25px;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active-link {
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle::before {
+            content: '☀️';
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        [data-theme="dark"] .theme-toggle::before {
+            content: '🌙';
+            left: 34px;
+            background: var(--bg-primary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .hamburger:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-secondary);
+            margin: 3px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] h1 {
+            color: var(--text-primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Input Area */
+        .input-area {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #postTitle {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        #postTitle:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        #postType {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 150px;
+            color: var(--text-primary);
+        }
+
+        #postType:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .post-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .post-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .post-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .controls select {
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .controls select {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .controls select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Posts */
+        .post {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .post.new {
+            animation: slideIn 0.5s ease-out;
+            border-left: 4px solid var(--success-color);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            word-wrap: break-word;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.general {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+        }
+
+        .tag.news {
+            background: rgba(237, 137, 54, 0.1);
+            color: var(--warning-color);
+        }
+
+        .tag.event {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--success-color);
+        }
+
+        .tag.question {
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--error-color);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .post-actions button {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--text-secondary);
+        }
+
+        .post-actions button:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .empty-state {
+            background: var(--bg-primary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success-color);
+        }
+
+        .notification.error {
+            background: var(--error-color);
+        }
+
+        .notification.warning {
+            background: var(--warning-color);
+        }
+
+        /* Loading Animation */
+        .loading {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--navbar-bg);
+            backdrop-filter: blur(10px);
+            margin-top: 4rem;
+            border-top: 1px solid var(--navbar-border);
+            transition: var(--transition);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-content p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--navbar-border);
+            padding: 1rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                gap: 0.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 1.5rem;
+                right: 0;
+                background: var(--navbar-bg);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-md);
+                border: 1px solid var(--navbar-border);
+                border-radius: var(--border-radius);
+                backdrop-filter: blur(10px);
+                margin-top: 0.5rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .post-actions {
+                flex-wrap: wrap;
+            }
+
+            .footer-links,
+            .footer-social {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 0 1rem;
+            }
+
+            .input-area {
+                padding: 1.5rem;
+            }
+
+            .post {
+                padding: 1rem;
+            }
+
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                transform: translateY(-100px);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+
+            .theme-toggle {
+                width: 50px;
+                height: 25px;
+            }
+
+            .theme-toggle::before {
+                width: 19px;
+                height: 19px;
+                font-size: 10px;
+            }
+
+            [data-theme="dark"] .theme-toggle::before {
+                left: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="header-container">
+            <div class="logo">CampusConnect</div>
+            <div class="nav-container">
+                <nav id="nav-menu" class="nav-menu">
+                    <a href="#home">Home</a>
+                    <a href="#wall" class="active-link">Wall</a>
+                    <a href="#events">Events</a>
+                    <a href="#notes">Notes</a>
+                    <a href="#polls">Polls</a>
+                    <a href="#notices">Notices</a>
+                    <a href="#profiles">Profiles</a>
+                    <a href="#clubs">Clubs</a>
+                    <a href="#qa">Q&A</a>
+                    <a href="#lostfound">Lost & Found</a>
+                </nav>
+                <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" role="button" tabindex="0">
+                </div>
+                <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1>📣 Campus Wall</h1>
+
+        <div class="input-area">
+            <div class="input-row">
+                <input type="text" id="postTitle" placeholder="What's happening on campus today?">
+                <select id="postType">
+                    <option value="General">📝 General</option>
+                    <option value="News">📰 News</option>
+                    <option value="Event">🎉 Event</option>
+                    <option value="Question">❓ Question</option>
+                </select>
+            </div>
+            <button class="post-button" onclick="addPost()">
+        </div>
+        <button class="post-button" onclick="addPost()">
+            <span id="postBtnText">Post Message</span>
+            <span id="postBtnLoader" class="loading" style="display: none;"></span>
+        </button>
+        </div>
+
+        <div class="controls">
+            <select id="filter" onchange="renderPosts()">
+                <option value="All">🔍 Filter: All Posts</option>
+                <option value="News">📰 Filter: News</option>
+                <option value="General">📝 Filter: General</option>
+                <option value="Event">🎉 Filter: Events</option>
+                <option value="Question">❓ Filter: Questions</option>
+            </select>
+
+            <select id="sort" onchange="renderPosts()">
+                <option value="newest">⏰ Sort: Newest First</option>
+                <option value="oldest">📅 Sort: Oldest First</option>
+                <option value="mostLiked">👍 Sort: Most Liked</option>
+            </select>
+        </div>
+
+        <div id="wall"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h2>CampusConnect</h2>
+            <p>Empowering students through collaboration, sharing, and community.</p>
+
+            <div class="footer-links">
+                <a href="#feed">Wall</a>
+                <a href="#clubs">Clubs</a>
+                <a href="#events">Events</a>
+                <a href="#notes">Notes</a>
+                <a href="#marketplace">Marketplace</a>
+            </div>
+
+            <div class="footer-social">
+                <a href="#">🐙 GitHub</a>
+                <a href="#">💼 LinkedIn</a>
+                <a href="mailto:you@example.com">✉️ Contact</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 CampusConnect. Made with ❤️ for students.</p>
+        </div>
+    </footer>
+
+    <script>
+        let posts = [];
+        let postIdCounter = 1;
+
+        // Dark mode functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            showNotification(`Switched to ${newTheme} mode! ${newTheme === 'dark' ? '🌙' : '☀️'}`);
+        }
+
+        // Mobile menu toggle
+        document.getElementById('hamburger').addEventListener('click', function () {
+            const navMenu = document.getElementById('nav-menu');
+            const hamburger = document.getElementById('hamburger');
+
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (e) {
+            const navMenu = document.getElementById('nav-menu');
+            const hamburger = document.getElementById('hamburger');
+            const themeToggle = document.getElementById('themeToggle');
+
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && !themeToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+        // Mobile menu toggle
+        document.getElementById('hamburger').addEventListener('click', function () {
+            const navMenu = document.getElementById('nav-menu');
+            const hamburger = document.getElementById('hamburger');
+
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (e) {
+            const navMenu = document.getElementById('nav-menu');
+            const hamburger = document.getElementById('hamburger');
+
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+        function addPost() {
+            const titleInput = document.getElementById('postTitle');
+            const typeSelect = document.getElementById('postType');
+            const title = titleInput.value.trim();
+            const type = typeSelect.value;
+
+            if (!title) {
+                showNotification('Please enter a message before posting!', 'error');
+                titleInput.focus();
+                return;
+            }
+
+            if (title.length > 280) {
+                showNotification('Message is too long! Please keep it under 280 characters.', 'error');
+                return;
+            }
+
+            if (title.length > 280) {
+                showNotification('Message is too long! Please keep it under 280 characters.', 'error');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.querySelector('.post-button');
+            const btnText = document.getElementById('postBtnText');
+            const btnLoader = document.getElementById('postBtnLoader');
+
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+
+            // Simulate posting delay
+            setTimeout(() => {
+                const post = {
+                    id: postIdCounter++,
+                    title,
+                    type,
+                    time: new Date(),
+                    likes: 0,
+                    isNew: true
+                };
+
+                posts.unshift(post); // Add to beginning for newest first
+                titleInput.value = '';
+                clearDraft();
+                clearDraft();
+
+                // Reset button state
+                btn.disabled = false;
+                btnText.style.display = 'inline';
+                btnLoader.style.display = 'none';
+
+                renderPosts();
+                showNotification('Post shared successfully! 🎉');
+
+                // Remove new flag after animation
+                setTimeout(() => {
+                    post.isNew = false;
+                }, 500);
+            }, 800);
+        }
+
+        function renderPosts() {
+            const wall = document.getElementById('wall');
+            const filter = document.getElementById('filter').value;
+            const sort = document.getElementById('sort').value;
+
+            let filtered = posts.filter(p => {
+                if (filter === 'All') return true;
+                return p.type === filter;
+            });
+
+            // Apply sorting
+            if (sort === 'newest') {
+                filtered.sort((a, b) => b.time - a.time);
+            } else if (sort === 'oldest') {
+                filtered.sort((a, b) => a.time - b.time);
+            } else if (sort === 'mostLiked') {
+                filtered.sort((a, b) => b.likes - a.likes);
+            }
+
+            // Filter posts from last 24 hours
+            const now = new Date();
+            filtered = filtered.filter(post => {
+                const hours = (now - new Date(post.time)) / 36e5;
+                return hours < 24;
+            });
+
+            if (filtered.length === 0) {
+                wall.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <h2>No posts yet</h2>
+            <p>Be the first to share something on the campus wall!</p>
+          </div>
+        `;
+                return;
+            }
+
+            wall.innerHTML = '';
+
+            for (const post of filtered) {
+                const postEl = document.createElement('div');
+                postEl.className = `post${post.isNew ? ' new' : ''}`;
+
+                const typeEmoji = getTypeEmoji(post.type);
+
+                postEl.innerHTML = `
+          <div class="post-header">
+            <div class="post-meta">
+              <div class="timestamp">${timeAgo(post.time)}</div>
+              <div class="tag ${post.type.toLowerCase()}">${typeEmoji} ${post.type}</div>
+            </div>
+          </div>
+          <div class="post-content">${escapeHtml(post.title)}</div>
+              <div class="tag ${post.type.toLowerCase()}">${typeEmoji} ${post.type}</div>
+            </div>
+          </div>
+          <div class="post-content">${escapeHtml(post.title)}</div>
+          <div class="post-actions">
+            <button onclick="likePost(${post.id})" title="Like this post">
+              👍 <span>${post.likes}</span>
+            </button>
+            <button onclick="sharePost(${post.id})" title="Share this post">
+              📤 Share
+            </button>
+            <button onclick="reportPost(${post.id})" title="Report this post">
+              🚩 Report
+            </button>
+            <button onclick="reportPost(${post.id})" title="Report this post">
+              🚩 Report
+            </button>
+          </div>
+        `;
+                wall.appendChild(postEl);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getTypeEmoji(type) {
+            const emojis = {
+                'General': '📝',
+                'News': '📰',
+                'Event': '🎉',
+                'Question': '❓'
+            };
+            return emojis[type] || '📝';
+        }
+
+        function likePost(id) {
+            const post = posts.find(p => p.id === id);
+            if (post) {
+                post.likes++;
+                renderPosts();
+                showNotification('Post liked! 👍');
+            }
+        }
+
+        function sharePost(id) {
+            const post = posts.find(p => p.id === id);
+            if (post) {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Campus Wall Post',
+                        text: post.title,
+                        url: window.location.href
+                    }).catch(() => {
+                        // Fallback if share fails
+                        copyToClipboard(post);
+                    });
+                } else {
+                    copyToClipboard(post);
+                }
+            }
+        }
+
+        function copyToClipboard(post) {
+            const text = `${post.title} - shared from Campus Wall`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('Post copied to clipboard! 📋');
+                    if (post) {
+                        if (navigator.share) {
+                            navigator.share({
+                                title: 'Campus Wall Post',
+                                text: post.title,
+                                url: window.location.href
+                            }).catch(() => {
+                                // Fallback if share fails
+                                copyToClipboard(post);
+                            });
+                        } else {
+                            copyToClipboard(post);
+                        }
+                    }
+                }
+
+    function copyToClipboard(post) {
+                        const text = `${post.title} - shared from Campus Wall`;
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(text).then(() => {
+                                showNotification('Post copied to clipboard! 📋');
+                            });
+                        } else {
+                            // Fallback for older browsers
+                            const textArea = document.createElement('textarea');
+                            textArea.value = text;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textArea);
+                            showNotification('Post copied to clipboard! 📋');
+                        }
+                    }
+
+    function reportPost(id) {
+                        const post = posts.find(p => p.id === id);
+                        if (post && confirm('Are you sure you want to report this post?')) {
+                            showNotification('Post reported. Thank you for keeping our community safe! 🛡️', 'warning');
+                        }
+                    }
+
+    function reportPost(id) {
+                        const post = posts.find(p => p.id === id);
+                        if (post && confirm('Are you sure you want to report this post?')) {
+                            showNotification('Post reported. Thank you for keeping our community safe! 🛡️', 'warning');
+                        }
+                    }
+
+    function timeAgo(date) {
+                        const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+                        const intervals = [
+                            { label: 'year', seconds: 31536000 },
+                            { label: 'month', seconds: 2592000 },
+                            { label: 'day', seconds: 86400 },
+                            { label: 'hour', seconds: 3600 },
+                            { label: 'minute', seconds: 60 },
+                            { label: 'second', seconds: 1 }
+                        ];
+
+                        for (const interval of intervals) {
+                            const count = Math.floor(seconds / interval.seconds);
+                            if (count > 0)
+                                return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
+                        }
+                        return 'Just now';
+                    }
+
+    // Enhanced keyboard support
+    document.getElementById('postTitle').addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            addPost();
+                        }
+                    });
+
+                // Character counter
+                document.getElementById('postTitle').addEventListener('input', function (e) {
+                    const value = e.target.value;
+                    localStorage.setItem('campusWallDraft', value);
+
+                    // Visual feedback for character limit
+                    if (value.length > 250) {
+                        e.target.style.borderColor = value.length > 280 ? 'var(--error-color)' : 'var(--warning-color)';
+                    } else {
+                        e.target.style.borderColor = 'var(--border-color)';
+                    }
+                    localStorage.setItem('campusWallDraft', value);
+
+                    // Visual feedback for character limit
+                    if (value.length > 250) {
+                        e.target.style.borderColor = value.length > 280 ? 'var(--error-color)' : 'var(--warning-color)';
+                    } else {
+                        e.target.style.borderColor = 'var(--border-color)';
+                    }
+                });
+
+                // Load draft on page load
+                window.addEventListener('load', function () {
+                    const draft = localStorage.getItem('campusWallDraft');
+                    if (draft) {
+                        document.getElementById('postTitle').value = draft;
+                    }
+
+                    // Initialize theme
+                    initTheme();
+
+                    // Add some sample posts for demonstration
+                    addSamplePosts();
+
+                    // Add some sample posts for demonstration
+                    addSamplePosts();
+                    renderPosts();
+                });
+
+                // Clear draft when post is successful
+                function clearDraft() {
+                    localStorage.removeItem('campusWallDraft');
+                }
+
+                // Add sample posts for demonstration
+                function addSamplePosts() {
+                    const samplePosts = [
+                        {
+                            id: postIdCounter++,
+                            title: "Welcome to the new Campus Wall! 🎉 Share your thoughts, events, and connect with fellow students.",
+                            type: "General",
+                            time: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
+                            likes: 12
+                        },
+                        {
+                            id: postIdCounter++,
+                            title: "Tech Talk: 'Future of AI in Education' happening tomorrow at 3 PM in the main auditorium. Don't miss it!",
+                            type: "Event",
+                            time: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
+                            likes: 8
+                        },
+                        {
+                            id: postIdCounter++,
+                            title: "Does anyone have notes from yesterday's Advanced Algorithms lecture? I missed it due to illness.",
+                            type: "Question",
+                            time: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+                            likes: 3
+                        }
+                    ];
+
+                    posts.push(...samplePosts);
+                }
+
+                // Add sample posts for demonstration
+                function addSamplePosts() {
+                    const samplePosts = [
+                        {
+                            id: postIdCounter++,
+                            title: "Welcome to the new Campus Wall! 🎉 Share your thoughts, events, and connect with fellow students.",
+                            type: "General",
+                            time: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
+                            likes: 12
+                        },
+                        {
+                            id: postIdCounter++,
+                            title: "Tech Talk: 'Future of AI in Education' happening tomorrow at 3 PM in the main auditorium. Don't miss it!",
+                            type: "Event",
+                            time: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
+                            likes: 8
+                        },
+                        {
+                            id: postIdCounter++,
+                            title: "Does anyone have notes from yesterday's Advanced Algorithms lecture? I missed it due to illness.",
+                            type: "Question",
+                            time: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+                            likes: 3
+                        }
+                    ];
+
+                    posts.push(...samplePosts);
+                }
+
+                // Periodically remove expired posts (every minute)
+                setInterval(() => {
+                    const now = new Date();
+                    const originalLength = posts.length;
+                    posts = posts.filter(post => (now - new Date(post.time)) / 36e5 < 24);
+
+                    if (posts.length !== originalLength) {
+                        renderPosts();
+                    }
+                }, 60000);
+
+                // Add smooth scrolling for better UX
+                function scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                // Add scroll to new post functionality when new post is added
+                function scrollToNewPost() {
+                    const wall = document.getElementById('wall');
+                    const firstPost = wall.querySelector('.post');
+                    if (firstPost) {
+                        firstPost.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }
+
+                // Add smooth scrolling for better UX
+                function scrollToTop() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+
+                // Add scroll to top functionality when new post is added
+                function scrollToNewPost() {
+                    const wall = document.getElementById('wall');
+                    const firstPost = wall.querySelector('.post');
+                    if (firstPost) {
+                        firstPost.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }
+
+                // Initialize page
+                initTheme();
+                renderPosts();
+    </script>
+</body>
+
+</html>

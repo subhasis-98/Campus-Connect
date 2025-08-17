@@ -4,166 +4,415 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CampusConnect - Event Schedule</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="nav.css">
+  <title>CampusConnect - Events</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="nav.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* Hero */
-    .hero {
-      text-align: center;
-      padding: 70px 20px 30px;
-      background: linear-gradient(to right, #240043, #000000);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f;
+      color: #f2e9fc;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .hero h1 {
-      font-size: 2.8rem;
-      color: #ff5ccc;
-      text-shadow: 0 0 8px #b84aff;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      color: #bbbbbb;
-      margin-top: 8px;
-    }
-
-    /* Venue */
-    .venue {
-      padding: 30px 20px;
-      text-align: center;
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
       max-width: 900px;
       margin: auto;
-      color: #cccccc;
-      line-height: 1.6;
+      animation: fadeIn 0.5s ease-in;
     }
 
-    /* Events Section */
-    .events {
-      padding: 40px 20px;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
       text-align: center;
+      margin-bottom: 2rem;
+      color: #c131cf;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 8px rgba(193, 49, 207, 0.3);
     }
 
-    .events h3 {
-      font-size: 1.8rem;
-      color: #ffccf5;
-      margin-bottom: 30px;
-      text-shadow: 0 0 6px #b84aff;
+    .input-area {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(160, 32, 240, 0.25);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
+      flex-wrap: wrap;
     }
 
-    .event-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-left: 6px solid #ff5ccc;
-      border-radius: 16px;
-      padding: 20px;
-      max-width: 500px;
-      margin: 20px auto;
-      text-align: left;
-      box-shadow: 0 10px 25px rgba(255, 0, 255, 0.05);
-      backdrop-filter: blur(20px);
+    input,
+    select,
+    textarea,
+    button {
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
     }
 
-    .event-card h4 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #ffffff;
+    input,
+    textarea {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      border: 1px solid #e1d4f5;
     }
 
-    .event-card p {
-      margin: 4px 0;
-      color: #dddddd;
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
     }
 
-    .tags {
-      margin-top: 10px;
+    textarea {
+      width: 100%;
+      resize: vertical;
+      min-height: 80px;
     }
 
-    .tags span {
-      display: inline-block;
-      background-color: #ff5ccc;
-      color: #000000;
+    input[type="file"] {
+      background: none;
+      padding: 0.5rem;
+      color: #f2e9fc;
+    }
+
+    button {
+      background: #c131cf;
+      color: white;
+      cursor: pointer;
+      flex: 1;
+      font-weight: 500;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      background: #a020f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .post {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
+      border-left: 5px solid #c131cf;
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(160, 32, 240, 0.2);
+    }
+
+    .post h2 {
+      font-size: 1.5rem;
       font-weight: 600;
-      border-radius: 14px;
-      padding: 5px 12px;
-      margin-right: 8px;
-      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+      color: #f2e9fc;
+    }
+
+    .post p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #e1ccf7;
+    }
+
+    .timestamp {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #c131cf;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .post-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .post-actions button {
+      flex: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f2e9fc;
+      border: 1px solid #e1d4f5;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .post-actions button:hover {
+      background: #c131cf;
+      color: white;
+      border-color: #c131cf;
+    }
+
+    .post-actions button:disabled {
+      background: #555;
+      color: #ccc;
+      cursor: not-allowed;
+      border-color: #555;
+    }
+
+    img.poster {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 1rem 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2e9fc;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(160, 32, 240, 0.25);
+    }
+
+    .footer-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #c131cf;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #f2e9fc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #c131cf;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social a {
+      color: #f2e9fc;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: #c131cf;
+    }
+
+    .footer-bottom {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .input-area {
+        flex-direction: column;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        flex: none;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .post {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- Navbar -->
   <header>
     <div class="logo">CampusConnect</div>
     <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span> <span></span> <span></span>
     </div>
     <nav id="nav-menu" class="nav-menu">
-      <a href="index.html">Home</a>
-      <a href="wall.html">Wall</a>
-      <a href="events.html" class="active-link">Events</a>
-      <a href="notes.html">Notes</a>
-      <a href="polls.html">Polls</a>
-      <a href="notices.html">Notices</a>
-      <a href="profiles.html">Profiles</a>
-      <a href="club.html">Clubs</a>
-      <a href="collegeQ.html">Q&A</a>
-      <a href="lostfound.html">Lost & Found</a>
+      <a href="home.html">Home</a> <a href="wall.html">Wall</a>
+      <a href="events.html" class="active-link">Events</a> <a href="notes.html">Notes</a>
+      <a href="polls.html">Polls</a> <a href="notices.html">Notices</a>
+      <a href="profiles.html">Profiles</a> <a href="club.html">Clubs</a>
+      <a href="collegeQ.html">Q&A</a> <a href="lostfound.html">Lost & Found</a>
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1>Event Schedule</h1>
-    <p>Home > Events</p>
-  </section>
+  <main>
+    <h1>📅 Create An Event</h1>
 
-  <!-- Description -->
-  <section class="venue">
-    <p>
-      CampusConnect is a dynamic platform bringing students and tech lovers together through engaging events,
-      exciting competitions, and collaborative learning experiences.
-    </p>
-  </section>
+    <form id="eventForm" class="input-area">
+      <input type="text" id="title" placeholder="Event Title" required />
+      <input type="text" id="venue" placeholder="Venue" required />
+      <input type="datetime-local" id="start" required />
+      <input type="datetime-local" id="end" required />
+      <textarea id="description" placeholder="Event Description" rows="3" required></textarea>
+      <input type="file" id="poster" accept="image/*" required />
+      <button type="submit">➕ Create Event</button>
+    </form>
 
-  <!-- Events List -->
-  <section class="events">
-    <h3>📅 Upcoming Events</h3>
+    <h1>📅 Upcoming Events</h1>
+    <section id="eventsList"></section>
+  </main>
 
-    <div class="event-card">
-      <h4>Algoverse 2025</h4>
-      <p>📅 Date: July 20, 2025</p>
-      <p>📍 Venue: Main Auditorium</p>
-      <div class="tags">
-        <span>Tech</span>
-        <span>AI</span>
-        <span>Code</span>
-      </div>
-    </div>
-
-    <div class="event-card">
-      <h4>StackBuild 2025</h4>
-      <p>📅 Date: July 25, 2025</p>
-      <p>📍 Venue: Innovation Lab</p>
-      <div class="tags">
-        <span>DevOps</span>
-        <span>Cloud</span>
-        <span>Workshop</span>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- Footer -->
   <footer class="footer">
-    <p>© 2025 CampusConnect. All rights reserved.</p>
+    <div class="footer-content">
+      <h2>CampusConnect</h2>
+      <p>
+        Empowering students through collaboration, sharing, and community.
+      </p>
+
+      <div class="footer-links">
+        <a href="#feed">Wall</a>
+        <a href="#clubs">Clubs</a>
+        <a href="#events">Events</a>
+        <a href="#notes">Notes</a>
+        <a href="#marketplace">Marketplace</a>
+      </div>
+
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:you@example.com"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 CampusConnect.</p>
+    </div>
   </footer>
-<script src="js/nav.js"></script>
+
+  <script>
+    const form = document.getElementById("eventForm");
+    const eventsList = document.getElementById("eventsList");
+    const votedEvents = new Set();
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const venue = document.getElementById("venue").value;
+      const start = new Date(document.getElementById("start").value);
+      const end = new Date(document.getElementById("end").value);
+      const description = document.getElementById("description").value;
+      const posterFile = document.getElementById("poster").files[0];
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const posterURL = e.target.result;
+
+        const eventId = Date.now();
+        const eventEl = document.createElement("div");
+        eventEl.className = "post";
+        eventEl.innerHTML = `
+            <h2>${title}</h2>
+            <img src="${posterURL}" alt="Event Poster" class="poster" />
+            <p><strong>Venue:</strong> ${venue}</p>
+            <p><strong>Starts:</strong> ${start.toLocaleString()}</p>
+            <p><strong>Ends:</strong> ${end.toLocaleString()}</p>
+            <p>${description}</p>
+            <p class="timestamp">Posted on ${new Date().toLocaleString()}</p>
+            <span class="tag">Upcoming</span>
+            <div class="post-actions">
+              <button onclick="rsvp(${eventId})" id="voteBtn-${eventId}">🙋 RSVP</button>
+              <span id="countdown-${eventId}"></span>
+            </div>
+          `;
+        eventsList.prepend(eventEl);
+
+        setInterval(() => updateCountdown(start, eventId), 1000);
+      };
+
+      reader.readAsDataURL(posterFile);
+      form.reset();
+    });
+
+    function rsvp(id) {
+      if (votedEvents.has(id)) {
+        alert("✅ You have already RSVPed for this event.");
+        return;
+      }
+      votedEvents.add(id);
+      const btn = document.getElementById(`voteBtn-${id}`);
+      btn.innerText = "✅ RSVPed";
+      btn.disabled = true;
+    }
+
+    function updateCountdown(startDate, id) {
+      const now = new Date();
+      const diff = startDate - now;
+
+      const el = document.getElementById(`countdown-${id}`);
+      if (diff <= 0) {
+        el.innerText = "🟢 Started";
+        return;
+      }
+
+      const hrs = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      el.innerText = `⏳ Starts in ${hrs}h ${mins}m ${secs}s`;
+    }
+  </script>
 </body>
 
 </html>

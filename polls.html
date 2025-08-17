@@ -3,112 +3,314 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CampusConnect - Polls & Surveys</title>
-  <link rel="stylesheet" href="nav.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="nav.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    .card,
-    .setup-card,
-    .poll-card {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      border-radius: 25px;
-      box-shadow: 0 15px 30px rgba(255, 0, 255, 0.1);
-      padding: 2rem;
-      width: 90%;
-      max-width: 600px;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f;
+      color: #f2e9fc;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
       text-align: center;
-      margin-top: auto;
-      margin-bottom: auto;
-      padding-top: 100px;
+      margin-bottom: 2rem;
+      color: #c131cf;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 8px rgba(193, 49, 207, 0.3);
     }
 
-    .btn,
-    button {
-      background: #c131cf;
-      color: white;
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-      margin-top: 10px;
-    }
-
-    .btn:hover,
-    button:hover {
-      background: #a020f0;
-      transform: scale(1.05);
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(160, 32, 240, 0.25);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
     }
 
     input[type="text"] {
-      width: 100%;
-      padding: 0.8rem 1rem;
+      padding: 0.75rem;
       border-radius: 10px;
-      border: none;
-      margin-bottom: 1rem;
+      border: 1px solid #e1d4f5;
+      outline: none;
       font-size: 1rem;
-      color: #000;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
+    }
+
+    .optionText {
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+    }
+
+    button {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      background: #c131cf;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #a020f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #pollsContainer {
+      padding: 2rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .poll-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
+      border-left: 5px solid #c131cf;
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    .poll-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(160, 32, 240, 0.2);
+    }
+
+    .poll-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #f2e9fc;
+    }
+
+    .poll-card p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #e1ccf7;
     }
 
     .option {
       background: rgba(255, 255, 255, 0.1);
       border-left: 5px solid #c131cf;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 10px;
+      border-radius: 10px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+
+    .option:hover {
+      background: rgba(160, 32, 240, 0.14);
+    }
+
+    .option button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #e1d4f5;
+      color: #f2e9fc;
+    }
+
+    .option button:hover {
+      background: #c131cf;
+      border-color: #c131cf;
+      color: white;
+      transform: none;
     }
 
     .vote-count {
-      margin-left: 10px;
-      font-weight: bold;
+      margin-left: 0.75rem;
+      font-weight: 600;
       color: #fff;
+      font-size: 0.95rem;
+      background: #c131cf;
+      border-radius: 8px;
+      padding: 0.25rem 0.75rem;
     }
 
     .total-votes {
-      margin-top: 20px;
-      font-size: 1.1rem;
+      margin-top: 1rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: #ffccf5;
+      color: #f8a8ee;
     }
 
-    #setupCard,
-    #pollCard {
+    .delete-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(45deg, #ff2e63, #ff6b6b);
+      border: none;
+      color: white;
+      font-weight: 500;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
       display: none;
     }
 
-    .card h1 {
-      font-size: 2.2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #ffccf5;
-      text-shadow: 0 0 8px #b84aff;
+    .delete-btn:hover {
+      background: linear-gradient(45deg, #d12a55, #ff4757);
+      transform: translateY(-2px);
     }
 
-    .card h2 {
+    .poll-card input.voter-name {
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #e1d4f5;
+      font-size: 1rem;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .poll-card input.voter-name:focus {
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2e9fc;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(160, 32, 240, 0.25);
+    }
+
+    .footer-content h2 {
       font-size: 1.5rem;
-      margin-bottom: 8px;
-      color: #ffffff;
+      margin-bottom: 1rem;
+      color: #c131cf;
     }
 
-    .card p {
-      font-style: italic;
-      margin-bottom: 20px;
-      color: #ccc;
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #f2e9fc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #c131cf;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social a {
+      color: #f2e9fc;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: #c131cf;
+    }
+
+    .footer-bottom {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .input-area {
+        padding: 1rem;
+      }
+
+      input,
+      button {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .poll-card {
+        padding: 1rem;
+        max-width: 100%;
+      }
+
+      .option button {
+        padding: 0.5rem;
+      }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- 🔹 NAVIGATION BAR -->
   <header>
     <div class="logo">CampusConnect</div>
     <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
@@ -130,57 +332,53 @@
     </nav>
   </header>
 
-  <!-- 🔹 Landing Page -->
-  <div class="card" id="featureCard">
-    <h1>📋 Polls & Surveys</h1>
-    <h2>Curious about what students think?</h2>
-    <p>Create polls, get feedback, and view live results!</p>
-    <button class="btn" onclick="showSetup()">🗳 Launch a Poll</button>
-  </div>
-
-  <!-- 🔹 Poll Setup -->
-  <div class="setup-card" id="setupCard">
-    <h2>📢 Create Your Poll</h2>
-    <input type="text" id="creatorName" placeholder="Your name (Poll creator)" />
-    <input type="text" id="pollInput" placeholder="E.g., What event should we plan?" />
-    <div id="optionInputs">
-      <input type="text" class="optionText" placeholder="Option 1" />
-      <input type="text" class="optionText" placeholder="Option 2" />
+  <main>
+    <h1>📢 Create Your Poll</h1>
+    <div class="input-area">
+      <input type="text" id="creatorName" placeholder="Your name (Poll creator)" />
+      <input type="text" id="pollInput" placeholder="E.g., What event should we plan?" />
+      <div id="optionInputs">
+        <input type="text" class="optionText" placeholder="Option 1" />
+        <input type="text" class="optionText" placeholder="Option 2" />
+      </div>
+      <button onclick="addOption()">➕ Add Option</button>
+      <button onclick="startPoll()">✅ Start Poll</button>
     </div>
-    <button onclick="addOption()">➕ Add Option</button>
-    <button onclick="startPoll()">✅ Start Poll</button>
-  </div>
 
-  <!-- 🔹 Voting Section -->
-  <div class="poll-card" id="pollCard">
-    <h2 id="pollTitle">📊 Your Poll</h2>
-    <p id="pollCreator" style="margin-bottom: 1rem; font-style: italic; color: #ccc;"></p>
-    <input type="text" id="voterName" placeholder="Enter your name to vote" />
-    <div id="optionsArea"></div>
-    <div class="total-votes">Total Votes: <span id="totalVotes">0</span></div>
-  </div>
+    <div id="pollsContainer"></div>
+  </main>
 
-  <!-- 🔹 FOOTER -->
-  <footer>
-    © 2025 CampusConnect. All rights reserved.
+  <footer class="footer">
+    <div class="footer-content">
+      <h2>CampusConnect</h2>
+      <p>Empowering students through collaboration, sharing, and community.</p>
+      <div class="footer-links">
+        <a href="#feed">Wall</a>
+        <a href="#clubs">Clubs</a>
+        <a href="#events">Events</a>
+        <a href="#notes">Notes</a>
+        <a href="#marketplace">Marketplace</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:you@example.com"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 CampusConnect.</p>
+    </div>
   </footer>
 
-  <!-- 🔹 SCRIPT -->
   <script>
-    let options = [];
-    let votes = [];
-    let votedNames = [];
-
-    function showSetup() {
-      document.getElementById("featureCard").style.display = "none";
-      document.getElementById("setupCard").style.display = "block";
-    }
+    let polls = [];
 
     function addOption() {
+      const optionCount = document.querySelectorAll('.optionText').length + 1;
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'optionText';
-      input.placeholder = `Option ${document.querySelectorAll('.optionText').length + 1}`;
+      input.placeholder = `Option ${optionCount}`;
       document.getElementById('optionInputs').appendChild(input);
     }
 
@@ -189,16 +387,10 @@
       const creator = document.getElementById('creatorName').value.trim();
       const optionInputs = document.querySelectorAll('.optionText');
 
-      options = [];
-      votes = [];
-      votedNames = [];
-
+      let options = [];
       optionInputs.forEach(input => {
-        const value = input.value.trim();
-        if (value !== '') {
-          options.push(value);
-          votes.push(0);
-        }
+        const val = input.value.trim();
+        if (val) options.push(val);
       });
 
       if (question === '' || creator === '' || options.length < 2) {
@@ -206,54 +398,113 @@
         return;
       }
 
-      document.getElementById('setupCard').style.display = 'none';
-      document.getElementById('pollCard').style.display = 'block';
+      const poll = {
+        question,
+        creator,
+        options,
+        votes: new Array(options.length).fill(0),
+        votedNames: []
+      };
 
-      document.getElementById('pollTitle').textContent = `📊 ${question}`;
-      document.getElementById('pollCreator').textContent = `👤 Created by: ${creator}`;
-      renderOptions();
-    }
+      polls.push(poll);
+      renderPolls();
 
-    function renderOptions() {
-      const optionsArea = document.getElementById('optionsArea');
-      optionsArea.innerHTML = '';
-      options.forEach((opt, index) => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.innerHTML = `
-          <span>${opt}</span>
-          <div>
-            <button onclick="vote(${index})">Vote</button>
-            <span class="vote-count" id="count${index}">0</span>
-          </div>
+      document.getElementById('pollInput').value = '';
+      document.getElementById('creatorName').value = '';
+      document.getElementById('optionInputs').innerHTML = `
+          <input type="text" class="optionText" placeholder="Option 1" />
+          <input type="text" class="optionText" placeholder="Option 2" />
         `;
-        optionsArea.appendChild(div);
-      });
-      document.getElementById('totalVotes').textContent = '0';
     }
 
-    function vote(index) {
-      const name = document.getElementById('voterName').value.trim();
-      if (name === '') {
-        alert("Please enter your name to vote.");
+    function renderPolls() {
+      const container = document.getElementById('pollsContainer');
+      container.innerHTML = '';
+
+      polls.forEach((poll, pollIndex) => {
+        const card = document.createElement('div');
+        card.className = 'poll-card';
+
+        const h2 = document.createElement('h2');
+        h2.textContent = `📊 ${poll.question}`;
+        card.appendChild(h2);
+
+        const creatorP = document.createElement('p');
+        creatorP.textContent = `👤 Created by: ${poll.creator}`;
+        card.appendChild(creatorP);
+
+        const voterInput = document.createElement('input');
+        voterInput.type = 'text';
+        voterInput.placeholder = 'Enter your name to vote or delete';
+        voterInput.className = 'voter-name';
+        card.appendChild(voterInput);
+
+        poll.options.forEach((opt, optIndex) => {
+          const optionDiv = document.createElement('div');
+          optionDiv.className = 'option';
+          optionDiv.innerHTML = `
+              <span>${opt}</span>
+              <div>
+                <button>Vote</button>
+                <span class="vote-count" id="count${pollIndex}_${optIndex}">${poll.votes[optIndex]}</span>
+              </div>
+            `;
+
+          const voteBtn = optionDiv.querySelector('button');
+          voteBtn.addEventListener('click', () => vote(pollIndex, optIndex, voterInput));
+
+          card.appendChild(optionDiv);
+        });
+
+        const totalVotes = poll.votes.reduce((a, b) => a + b, 0);
+        const totalVotesP = document.createElement('p');
+        totalVotesP.className = 'total-votes';
+        totalVotesP.textContent = `Total votes: ${totalVotes}`;
+        card.appendChild(totalVotesP);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete Poll';
+        deleteBtn.className = 'delete-btn';
+        card.appendChild(deleteBtn);
+
+        deleteBtn.addEventListener('click', () => {
+          if (confirm("Are you sure you want to delete this poll?")) {
+            polls.splice(pollIndex, 1);
+            renderPolls();
+          }
+        });
+
+        voterInput.addEventListener('input', () => {
+          if (voterInput.value.trim() === poll.creator) {
+            deleteBtn.style.display = 'block';
+          } else {
+            deleteBtn.style.display = 'none';
+          }
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function vote(pollIndex, optIndex, voterInput) {
+      const voterName = voterInput.value.trim();
+      if (voterName === '') {
+        alert('Please enter your name to vote!');
         return;
       }
 
-      if (votedNames.includes(name.toLowerCase())) {
-        alert("⚠ You have already voted!");
+      let poll = polls[pollIndex];
+      if (poll.votedNames.includes(voterName)) {
+        alert('You have already voted on this poll.');
         return;
       }
 
-      votes[index]++;
-      votedNames.push(name.toLowerCase());
-
-      document.getElementById("count" + index).textContent = votes[index];
-      const total = votes.reduce((a, b) => a + b, 0);
-      document.getElementById("totalVotes").textContent = total;
-
-      document.getElementById('voterName').value = "";
+      poll.votes[optIndex]++;
+      poll.votedNames.push(voterName);
+      renderPolls();
     }
   </script>
+
   <script src="js/nav.js"></script>
 </body>
 

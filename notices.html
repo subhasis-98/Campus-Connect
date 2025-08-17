@@ -3,32 +3,87 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <title>CampusConnect – Notices (Admin Edit Demo)</title>
-  <link rel="stylesheet" href="nav.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusConnect - Notices</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="stylesheet" href="nav.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    select {
-      padding: 8px;
-      border-radius: 8px;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f0f;
+      color: #f2e9fc;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem 1rem;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #c131cf;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 8px rgba(193, 49, 207, 0.3);
+    }
+
+    #filterCategory {
+      display: block;
+      margin: 0 auto 2rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #e1d4f5;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
       font-size: 1rem;
-      margin-bottom: 1rem;
+      width: 100%;
+      max-width: 300px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #filterCategory:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
     }
 
     .noticeboard {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
       flex-grow: 1;
     }
 
     .notice-card {
-      position: relative;
       background: rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      border-left: 5px solid #ffffff30;
-      transition: .4s ease;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border-left: 5px solid #c131cf;
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.1);
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.4s ease;
       opacity: 0;
       transform: translateY(20px);
     }
@@ -43,12 +98,18 @@
       background: rgba(255, 255, 255, 0.12);
     }
 
+    .notice-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(160, 32, 240, 0.2);
+    }
+
     .tag {
       display: inline-block;
-      padding: 3px 10px;
-      border-radius: 10px;
-      font-size: .75rem;
-      margin-bottom: .4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
     }
 
     .tag.exam {
@@ -64,52 +125,82 @@
     }
 
     .notice-title {
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #f2e9fc;
     }
 
     .notice-body {
-      margin-top: .5rem;
-      font-size: .95rem;
-      line-height: 1.4;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #e1ccf7;
+      line-height: 1.5;
     }
 
     .edit-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #555;
-      color: white;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 6px;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #e1d4f5;
+      color: #f2e9fc;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: .75rem;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
     }
 
-    input,
+    .edit-btn:hover {
+      background: #c131cf;
+      border-color: #c131cf;
+      color: white;
+    }
+
+    input.edit,
     select.edit,
-    textarea {
+    textarea.edit {
       width: 100%;
-      margin: 4px 0;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid #e1d4f5;
       font-size: 1rem;
+      background: rgba(255, 255, 255, 0.84);
+      color: #232323;
+      margin-bottom: 0.75rem;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input.edit:focus,
+    select.edit:focus,
+    textarea.edit:focus {
+      outline: none;
+      border-color: #c131cf;
+      box-shadow: 0 0 8px rgba(193, 49, 207, 0.3);
+    }
+
+    textarea.edit {
+      resize: vertical;
+      min-height: 80px;
     }
 
     .save-cancel {
-      margin-top: .5rem;
-      text-align: right;
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
     }
 
     .save,
     .cancel {
-      padding: 6px 12px;
+      padding: 0.5rem 1rem;
       border: none;
-      border-radius: 6px;
-      margin-left: 8px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
     .save {
@@ -117,22 +208,108 @@
       color: white;
     }
 
+    .save:hover {
+      background: #00a080;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 197, 160, 0.3);
+    }
+
     .cancel {
       background: #999;
       color: white;
     }
 
+    .cancel:hover {
+      background: #777;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(119, 119, 119, 0.3);
+    }
 
-    /* To prevent content behind navbar */
-    #mainContent {
-      margin-top: 70px;
-      flex-grow: 1;
+    .footer {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2e9fc;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(160, 32, 240, 0.25);
+    }
+
+    .footer-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #c131cf;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #f2e9fc;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #c131cf;
+    }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-social a {
+      color: #f2e9fc;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: #c131cf;
+    }
+
+    .footer-bottom {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .notice-card {
+        padding: 1rem;
+      }
+
+      #filterCategory {
+        max-width: 100%;
+      }
+
+      .save-cancel {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .save,
+      .cancel {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <div class="logo">CampusConnect</div>
     <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
@@ -154,20 +331,17 @@
     </nav>
   </header>
 
-  <main id="mainContent">
+  <main>
     <h1>📢 Campus Notices</h1>
-    <div style="text-align:center;">
-      <select id="filterCategory" onchange="filterNotices()">
-        <option value="all">🔍 Show All</option>
-        <option value="exam">📚 Exam</option>
-        <option value="event">🎉 Event</option>
-        <option value="general">📝 General</option>
-      </select>
-    </div>
+    <select id="filterCategory" onchange="filterNotices()">
+      <option value="all">🔍 Show All</option>
+      <option value="exam">📚 Exam</option>
+      <option value="event">🎉 Event</option>
+      <option value="general">📝 General</option>
+    </select>
     <div class="noticeboard" id="noticeboard">
-      <!-- Example Notices -->
       <div class="notice-card pinned show" data-category="general" data-date="2025-07-21">
-        <div class="tag">📌 PINNED</div>
+        <div class="tag general">📌 PINNED</div>
         <div class="notice-title">Welcome to CampusConnect</div>
         <div class="notice-body">Stay informed with live notices, events, exams, and more.</div>
         <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>
@@ -187,8 +361,26 @@
     </div>
   </main>
 
-  <footer>
-    © 2025 CampusConnect. All rights reserved.
+  <footer class="footer">
+    <div class="footer-content">
+      <h2>CampusConnect</h2>
+      <p>Empowering students through collaboration, sharing, and community.</p>
+      <div class="footer-links">
+        <a href="#feed">Wall</a>
+        <a href="#clubs">Clubs</a>
+        <a href="#events">Events</a>
+        <a href="#notes">Notes</a>
+        <a href="#marketplace">Marketplace</a>
+      </div>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="mailto:you@example.com"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 CampusConnect.</p>
+    </div>
   </footer>
 
   <script>
@@ -230,22 +422,22 @@
       const body = card.querySelector('.notice-body').textContent;
 
       card.innerHTML = `
-        <label>Category:</label>
-        <select class="edit">
-          <option value="exam">📚 Exam</option>
-          <option value="event">🎉 Event</option>
-          <option value="general">📝 General</option>
-        </select>
-        <label>Date:</label>
-        <input type="date" class="edit" value="${date}" />
-        <label>Title:</label>
-        <input type="text" class="edit" value="${title}" />
-        <label>Body:</label>
-        <textarea class="edit" rows="3">${body}</textarea>
-        <div class="save-cancel">
-          <button class="save" onclick="saveEdit(this)">Save</button>
-          <button class="cancel" onclick="cancelEdit(this)">Cancel</button>
-        </div>`;
+          <label>Category:</label>
+          <select class="edit">
+            <option value="exam">📚 Exam</option>
+            <option value="event">🎉 Event</option>
+            <option value="general">📝 General</option>
+          </select>
+          <label>Date:</label>
+          <input type="date" class="edit" value="${date}" />
+          <label>Title:</label>
+          <input type="text" class="edit" value="${title}" />
+          <label>Body:</label>
+          <textarea class="edit" rows="3">${body}</textarea>
+          <div class="save-cancel">
+            <button class="save" onclick="saveEdit(this)">Save</button>
+            <button class="cancel" onclick="cancelEdit(this)">Cancel</button>
+          </div>`;
 
       const sel = card.querySelector('select.edit');
       sel.value = card.dataset.category;
@@ -260,10 +452,10 @@
       card.dataset.date = inputDate.value;
       const catTag = sel.value === 'exam' ? '📚 Exam' : sel.value === 'event' ? '🎉 Event' : '📝 General';
       card.innerHTML = `
-        <div class="tag ${sel.value}">${catTag}</div>
-        <div class="notice-title">${inputTitle.value}</div>
-        <div class="notice-body">${inputBody.value}</div>
-        <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>`;
+          <div class="tag ${sel.value}">${catTag}</div>
+          <div class="notice-title">${inputTitle.value}</div>
+          <div class="notice-body">${inputBody.value}</div>
+          <button class="edit-btn" onclick="attemptEdit(this)">Edit</button>`;
       debounceSort();
     }
 
@@ -282,6 +474,7 @@
       }, 300);
     }
   </script>
+
   <script src="js/nav.js"></script>
 </body>
 
